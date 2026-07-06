@@ -1,0 +1,1247 @@
+{
+ "_meta": {
+  "schema": "data-strength-elevator graph+analysis decision catalog v1",
+  "purpose": "single machine-readable index queried by choose_graph.py so styles/rules are stored once, not searched",
+  "sources": "styles from graph-style-library.md; anti-patterns from FriendsDontLetFriends (MIT, DOIs cited); journal palettes hex from ggsci/ggprism (GPL-3 code NOT used, hex are facts); style engines from SciencePlots + ultraplot (MIT); stat methods from statistics-rigor.md + domain-conventions.md",
+  "scope_rule": "GROUP-8 styles + modeling stats are hard-scoped to in-silico/modeling/signal deliverables; never launder onto wet-lab dissolution/PK/BE/biological endpoints"
+ },
+ "styles": [
+  {
+   "id": "S1",
+   "name": "Bar + overlaid individual data points (dot-on-bar), mean \u00b1 s.d",
+   "group": "distributions",
+   "provenance": "E",
+   "intent": [
+    "distribution",
+    "magnitude",
+    "compare"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 1,
+   "domain_fit": {
+    "dissolution": "prefer_profile(S29)",
+    "PK": "prefer_geomean_log(S30)"
+   },
+   "stat": null,
+   "requires": [],
+   "note": "dot-on-bar mitigates AP1"
+  },
+  {
+   "id": "S2",
+   "name": "Jittered strip / beeswarm (points only, no bar)",
+   "group": "distributions",
+   "provenance": "E-variant",
+   "intent": [
+    "distribution",
+    "magnitude",
+    "compare"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 1,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S3",
+   "name": "Violin / box-and-whisker / raincloud",
+   "group": "distributions",
+   "provenance": "D \u2014 use with care",
+   "intent": [
+    "distribution",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 20,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": "AP2: violin/box unstable at small n (quartiles stabilize ~n>50); never at n<20"
+  },
+  {
+   "id": "S4",
+   "name": "Overlaid distribution / spectral trace (intensity vs size/wavelength)",
+   "group": "distributions",
+   "provenance": "E",
+   "intent": [
+    "distribution",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S5",
+   "name": "Large-N screening bar array (the \"library screen\")",
+   "group": "comparisons",
+   "provenance": "E",
+   "intent": [
+    "compare",
+    "screen",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": "whole library incl. losers (anti-cherry-pick)"
+  },
+  {
+   "id": "S6",
+   "name": "Finalist bar + pairwise significance brackets",
+   "group": "comparisons",
+   "provenance": "E",
+   "intent": [
+    "compare"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "named test + exact P + n.s. shown"
+   ],
+   "note": ""
+  },
+  {
+   "id": "S7",
+   "name": "Grouped / clustered bar (two-factor: condition \u00d7 category)",
+   "group": "comparisons",
+   "provenance": "E",
+   "intent": [
+    "compare",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical_2factor"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "two_factor",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S8",
+   "name": "Dose\u2013response bar ladder (ascending/descending staircase)",
+   "group": "comparisons",
+   "provenance": "E",
+   "intent": [
+    "dose_response",
+    "compare"
+   ],
+   "data_structure": [
+    "ordinal",
+    "dose"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S9",
+   "name": "Dual-axis paired bar (two linked properties of one sample)",
+   "group": "comparisons",
+   "provenance": "E",
+   "intent": [
+    "compare",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S10",
+   "name": "Floating / range bar (min\u2192max with mean line) for DoE",
+   "group": "comparisons",
+   "provenance": "E",
+   "intent": [
+    "compare",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S11",
+   "name": "Normalized bar with a dashed reference line (= 1 or = control)",
+   "group": "comparisons",
+   "provenance": "E",
+   "intent": [
+    "compare",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S12",
+   "name": "Dose\u2013response / concentration\u2013response line with fit",
+   "group": "comparisons",
+   "provenance": "E-variant",
+   "intent": [
+    "dose_response",
+    "relationship"
+   ],
+   "data_structure": [
+    "continuous"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "dose_response",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S13",
+   "name": "Observed-vs-predicted parity plot (y = x line)",
+   "group": "relationships / parity",
+   "provenance": "D",
+   "intent": [
+    "agreement",
+    "calibration"
+   ],
+   "data_structure": [
+    "continuous_paired"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "IVIVC": "required",
+    "CFD": "required",
+    "PINN": "required"
+   },
+   "stat": "agreement_pred_obs",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S14",
+   "name": "Bland\u2013Altman (difference vs mean) agreement plot",
+   "group": "relationships / parity",
+   "provenance": "D",
+   "intent": [
+    "agreement"
+   ],
+   "data_structure": [
+    "continuous_paired"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "IVIVC": "required"
+   },
+   "stat": "agreement_pred_obs",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S15",
+   "name": "Correlation / regression scatter with CI band",
+   "group": "relationships / parity",
+   "provenance": "D",
+   "intent": [
+    "relationship"
+   ],
+   "data_structure": [
+    "continuous_paired"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "regression",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S16",
+   "name": "Levy plot (in-vivo time vs in-vitro time)",
+   "group": "relationships / parity",
+   "provenance": "D",
+   "intent": [
+    "relationship",
+    "agreement",
+    "calibration"
+   ],
+   "data_structure": [
+    "continuous_paired"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S17",
+   "name": "Diverging log2 fold-change heatmap (overview) + promoted bars (detail)",
+   "group": "sensitivity / uncertainty",
+   "provenance": "E",
+   "intent": [
+    "sensitivity",
+    "overview"
+   ],
+   "data_structure": [
+    "matrix",
+    "parameters"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "reorder rows/cols (AP5)",
+    "cap outliers ~95pct (AP6)"
+   ],
+   "note": "diverging ONLY for signed fold-change (AP3)"
+  },
+  {
+   "id": "S18",
+   "name": "Tornado / forest sensitivity plot",
+   "group": "sensitivity / uncertainty",
+   "provenance": "D",
+   "intent": [
+    "sensitivity",
+    "ranking"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S19",
+   "name": "Loss / convergence curve (training + validation)",
+   "group": "sensitivity / uncertainty",
+   "provenance": "D",
+   "intent": [
+    "convergence"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PINN": "required"
+   },
+   "stat": "model_selection",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S20",
+   "name": "Grid-convergence / mesh-independence plot (GCI)",
+   "group": "sensitivity / uncertainty",
+   "provenance": "D",
+   "intent": [
+    "convergence"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "CFD": "required"
+   },
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S21",
+   "name": "Error / uncertainty band on a time-course (CI or s.d. ribbon)",
+   "group": "sensitivity / uncertainty",
+   "provenance": "E",
+   "intent": [
+    "general"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S22",
+   "name": "Chemical-structure grid / R-group library plate (small-multiples of molecules)",
+   "group": "flow / composition",
+   "provenance": "E",
+   "intent": [
+    "composition",
+    "structure",
+    "summary"
+   ],
+   "data_structure": [
+    "compositional",
+    "schematic"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S23",
+   "name": "Micrograph with scale bar (cryo-TEM / EM / confocal)",
+   "group": "flow / composition",
+   "provenance": "E",
+   "intent": [
+    "composition",
+    "structure",
+    "summary"
+   ],
+   "data_structure": [
+    "compositional",
+    "schematic"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S24",
+   "name": "AUC / summary-scalar bar (collapse a curve to one number)",
+   "group": "flow / composition",
+   "provenance": "E",
+   "intent": [
+    "summary",
+    "composition"
+   ],
+   "data_structure": [
+    "compositional",
+    "schematic"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": "the honest 'parts/whole & scalar' answer instead of pie/donut (AP10/AP11)"
+  },
+  {
+   "id": "S25",
+   "name": "Confidence-interval / equivalence forest (ratio vs bounds)",
+   "group": "flow / composition",
+   "provenance": "D",
+   "intent": [
+    "equivalence",
+    "uncertainty"
+   ],
+   "data_structure": [
+    "compositional",
+    "schematic"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "required_for_BE",
+    "BE": "required"
+   },
+   "stat": "PK_exposure",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S26",
+   "name": "Sankey / alluvial / flow diagram",
+   "group": "flow / composition",
+   "provenance": "D",
+   "intent": [
+    "composition",
+    "structure",
+    "summary"
+   ],
+   "data_structure": [
+    "compositional",
+    "schematic"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S27",
+   "name": "Inline data table as a figure panel (DoE / lookup)",
+   "group": "flow / composition",
+   "provenance": "E",
+   "intent": [
+    "composition",
+    "structure",
+    "summary"
+   ],
+   "data_structure": [
+    "compositional",
+    "schematic"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S28",
+   "name": "Multi-series kinetic / time-course line (mean \u00b1 s.d.)",
+   "group": "time-course",
+   "provenance": "E",
+   "intent": [
+    "time_course",
+    "kinetics"
+   ],
+   "data_structure": [
+    "time_series"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S29",
+   "name": "Dissolution / release profile overlay (% released vs time)",
+   "group": "time-course",
+   "provenance": "D",
+   "intent": [
+    "time_course",
+    "kinetics"
+   ],
+   "data_structure": [
+    "time_series"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "dissolution": "required"
+   },
+   "stat": "dissolution_similarity",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S30",
+   "name": "Semi-log PK concentration\u2013time profile",
+   "group": "time-course",
+   "provenance": "D",
+   "intent": [
+    "time_course",
+    "kinetics"
+   ],
+   "data_structure": [
+    "time_series"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "required"
+   },
+   "stat": "PK_exposure",
+   "requires": [],
+   "note": "semi-log, geometric mean, 90% CI"
+  },
+  {
+   "id": "S31",
+   "name": "Kaplan\u2013Meier survival / time-to-event step curve + log-rank",
+   "group": "time-course",
+   "provenance": "E",
+   "intent": [
+    "survival"
+   ],
+   "data_structure": [
+    "time_to_event"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "survival",
+   "requires": [],
+   "note": "never an endpoint bar"
+  },
+  {
+   "id": "S32",
+   "name": "IVIS / spatial heat-overlay image grid (shared calibrated colorbar)",
+   "group": "time-course",
+   "provenance": "E",
+   "intent": [
+    "time_course",
+    "kinetics"
+   ],
+   "data_structure": [
+    "time_series"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S33",
+   "name": "Flow-cytometry density / dot plot with on-plot % gate",
+   "group": "classification / gates / diagnostic",
+   "provenance": "E",
+   "intent": [
+    "general"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S34",
+   "name": "Flow-histogram overlay stack (offset density curves per marker)",
+   "group": "classification / gates / diagnostic",
+   "provenance": "E",
+   "intent": [
+    "general"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S35",
+   "name": "ROC / PR curve",
+   "group": "classification / gates / diagnostic",
+   "provenance": "D",
+   "intent": [
+    "classification"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "classifier_perf",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S36",
+   "name": "Confusion matrix / calibration plot",
+   "group": "classification / gates / diagnostic",
+   "provenance": "D",
+   "intent": [
+    "classification",
+    "calibration"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "classifier_perf",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S37",
+   "name": "Multichannel IF overlay + small-multiples micrograph matrix",
+   "group": "classification / gates / diagnostic",
+   "provenance": "E",
+   "intent": [
+    "general"
+   ],
+   "data_structure": [
+    "general"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S38",
+   "name": "3D solution-field surface (`plot_surface`) with view-angle control",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "field",
+    "orientation"
+   ],
+   "data_structure": [
+    "field_2d"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": "orientation only; not a substitute for GCI/parity"
+  },
+  {
+   "id": "S39",
+   "name": "Waterfall / stacked-offset profile plot",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "time_course",
+    "field"
+   ],
+   "data_structure": [
+    "many_profiles",
+    "time_series"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S40",
+   "name": "2D field / matrix heatmap (`pcolormesh` / `imshow`) + calibrated colorbar",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "field",
+    "overview"
+   ],
+   "data_structure": [
+    "field_2d",
+    "matrix"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "sequential CB-safe map (no jet, AP12)"
+   ],
+   "note": ""
+  },
+  {
+   "id": "S41",
+   "name": "Spectrogram / time-frequency (Gabor / STFT)",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "spectral",
+    "time_frequency"
+   ],
+   "data_structure": [
+    "signal"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": "state window length"
+  },
+  {
+   "id": "S42",
+   "name": "Stem plot \u2014 discrete / sparse spectrum",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "spectral",
+    "sparsity"
+   ],
+   "data_structure": [
+    "discrete",
+    "signal"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S43",
+   "name": "Singular-value (scree) spectrum + cumulative-variance",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "dimensionality"
+   ],
+   "data_structure": [
+    "high_dim"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "dimensionality",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S44",
+   "name": "PCA / low-dimensional projection (score plot) + variance-explained",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "dimensionality",
+    "clustering"
+   ],
+   "data_structure": [
+    "high_dim"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "dimensionality",
+   "requires": [],
+   "note": ""
+  },
+  {
+   "id": "S45",
+   "name": "Phase portrait / state-space trajectory",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "D-K",
+   "intent": [
+    "dynamics"
+   ],
+   "data_structure": [
+    "state_space"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [],
+   "note": ""
+  }
+ ],
+ "antipatterns": [
+  {
+   "id": "AP1",
+   "name": "Bars for means separation (bars hide distribution)",
+   "fix": "show the distribution: dot-on-bar / strip / box",
+   "prefer": [
+    "S1",
+    "S2",
+    "S3"
+   ],
+   "ref": "10.1371/journal.pbio.1002128"
+  },
+  {
+   "id": "AP2",
+   "name": "Violin/box for small n",
+   "fix": "quartiles unstable at small n; use strip/dot",
+   "prefer": [
+    "S2",
+    "S1"
+   ],
+   "min_n_for_violin": 20,
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP3",
+   "name": "Bidirectional (diverging) scale for unidirectional data",
+   "fix": "use a sequential scale; endpoints map to real max/min/zero",
+   "prefer_palette": "sequential",
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP4",
+   "name": "Bar-plot meadow (many bars, multifactor)",
+   "fix": "facet/group by the factor of interest",
+   "prefer": [
+    "M7_small_multiples"
+   ],
+   "ref": "10.1186/s12870-020-2243-7"
+  },
+  {
+   "id": "AP5",
+   "name": "Heatmap without reordering rows/columns",
+   "fix": "cluster/reorder to reveal structure",
+   "ref": "10.1101/2022.07.04.498697"
+  },
+  {
+   "id": "AP6",
+   "name": "Heatmap without checking outliers",
+   "fix": "cap the color scale (~95th pct)",
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP7",
+   "name": "Not checking data range per factor level",
+   "fix": "check per-factor range; narrow effects hide on a shared scale",
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP8",
+   "name": "Network graphs with a single layout",
+   "fix": "try multiple layouts",
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP9",
+   "name": "Confusing position-based vs length-based encodings",
+   "fix": "bars must be zero-based (length); dots/box are position-based; no broken-axis bars",
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP10",
+   "name": "Pie chart",
+   "fix": "stacked / side-by-side bars (length beats angle)",
+   "prefer": [
+    "S24",
+    "stacked_bar"
+   ],
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP11",
+   "name": "Concentric donuts",
+   "fix": "unwrap to stacked bars (outer rings exaggerate)",
+   "prefer": [
+    "stacked_bar"
+   ],
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP12",
+   "name": "Red/green and rainbow (jet) color scales",
+   "fix": "use viridis/cividis (colorblind- and greyscale-safe)",
+   "prefer_palette": "viridis",
+   "ref": "10.1038/nmeth.1618"
+  },
+  {
+   "id": "AP13",
+   "name": "Stacked bar without reordering segments",
+   "fix": "order stack segments meaningfully",
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP14",
+   "name": "Mixing stacked bars with mean separation",
+   "fix": "don't combine proportion-stacking with mean\u00b1error",
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP15",
+   "name": "Histogram for small n",
+   "fix": "use dot/strip",
+   "prefer": [
+    "S2"
+   ],
+   "ref": "FriendsDontLetFriends"
+  },
+  {
+   "id": "AP16",
+   "name": "Boxplot for bimodal data",
+   "fix": "show the distribution (raincloud/histogram/violin at large n)",
+   "ref": "FriendsDontLetFriends"
+  }
+ ],
+ "palettes": {
+  "okabe_ito": {
+   "default": true,
+   "colorblind_safe": true,
+   "hex": [
+    "#E69F00",
+    "#0072B2",
+    "#009E73",
+    "#CC79A7",
+    "#D55E00",
+    "#56B4E9",
+    "#F0E442",
+    "#999999",
+    "#000000"
+   ],
+   "source": "Okabe-Ito / Wong 2011 (10.1038/nmeth.1618)",
+   "note": "skill default; accent orange = key finding, blue = comparator, grey = control"
+  },
+  "prism_colorblind_safe": {
+   "colorblind_safe": true,
+   "hex": [
+    "#000000",
+    "#FF0066",
+    "#107F80",
+    "#40007F",
+    "#AA66FF",
+    "#66CCFE"
+   ],
+   "source": "ggprism (GPL-3; hex are facts)",
+   "note": "GraphPad-Prism look, CB-safe; good for biomedical audiences"
+  },
+  "npg": {
+   "colorblind_safe": false,
+   "hex": [
+    "#E64B35",
+    "#4DBBD5",
+    "#00A087",
+    "#3C5488",
+    "#F39B7F",
+    "#8491B4",
+    "#91D1C2",
+    "#DC0000",
+    "#7E6148",
+    "#B09C85"
+   ],
+   "source": "ggsci NPG (GPL-3; hex are facts)",
+   "note": "Nature journals; NOT deutan-safe (red #E64B35 vs green #00A087) \u2014 only with position+label+shape redundancy, else prefer okabe_ito"
+  },
+  "aaas": {
+   "colorblind_safe": false,
+   "hex": [
+    "#3B4992",
+    "#EE0000",
+    "#008B45",
+    "#631879",
+    "#008280",
+    "#BB0021",
+    "#5F559B",
+    "#A20056",
+    "#808180",
+    "#1B1919"
+   ],
+   "source": "ggsci AAAS/Science (GPL-3; hex are facts)",
+   "note": "Science; red/green present \u2014 verify CB-safety or add redundancy"
+  },
+  "nejm": {
+   "colorblind_safe": false,
+   "hex": [
+    "#BC3C29",
+    "#0072B5",
+    "#E18727",
+    "#20854E",
+    "#7876B1",
+    "#6F99AD",
+    "#FFDC91",
+    "#EE4C97"
+   ],
+   "source": "ggsci NEJM (GPL-3; hex are facts)",
+   "note": "NEJM; verify CB-safety or add redundancy"
+  },
+  "lancet": {
+   "colorblind_safe": false,
+   "hex": [
+    "#00468B",
+    "#ED0000",
+    "#42B540",
+    "#0099B4",
+    "#925E9F",
+    "#FDAF91",
+    "#AD002A",
+    "#ADB6B6",
+    "#1B1919"
+   ],
+   "source": "ggsci Lancet (GPL-3; hex are facts)",
+   "note": "Lancet; verify CB-safety or add redundancy"
+  },
+  "jama": {
+   "colorblind_safe": false,
+   "hex": [
+    "#374E55",
+    "#DF8F44",
+    "#00A1D5",
+    "#B24745",
+    "#79AF97",
+    "#6A6599",
+    "#80796B"
+   ],
+   "source": "ggsci JAMA (GPL-3; hex are facts)",
+   "note": "JAMA; muted, differ in lightness \u2014 safer than most journal cycles but verify + add redundancy"
+  }
+ },
+ "style_engines": {
+  "scienceplots_nature": {
+   "apply": "plt.style.use(['science','nature','no-latex'])",
+   "figsize_in": [
+    3.3,
+    2.5
+   ],
+   "font": "sans-serif 7pt (DejaVu/Arial/Helvetica)",
+   "axes_linewidth": 0.5,
+   "ticks": "inward, top+right",
+   "license": "MIT",
+   "install": "pip install SciencePlots",
+   "caveat": "base 'science' needs LaTeX; the 'no-latex' overlay removes that dependency"
+  },
+  "scienceplots_ieee": {
+   "apply": "plt.style.use(['science','ieee','no-latex'])",
+   "figsize_in": [
+    3.3,
+    2.5
+   ],
+   "dpi": 600,
+   "note": "B/W-safe line-style cycler (k/r/b/g + -/--/:/-.)",
+   "license": "MIT"
+  },
+  "scienceplots_science": {
+   "apply": "plt.style.use(['science','no-latex'])",
+   "font": "serif base",
+   "license": "MIT",
+   "caveat": "drop 'no-latex' only if TeX Live is installed"
+  },
+  "ultraplot_multipanel": {
+   "apply": "import ultraplot as uplt; fig,axs=uplt.subplots(ncols=..,nrows=..,abc=True,share=3)",
+   "features": [
+    "auto a/b/c panel labels (abc=True)",
+    "shared/spanning axes (sharex/y, spanx/y)",
+    "figure sizing in mm/cm (refwidth/figwidth units)",
+    "unified fig.colorbar/fig.legend"
+   ],
+   "license": "MIT",
+   "install": "pip install ultraplot"
+  }
+ },
+ "stat_methods": {
+  "compare_two_groups": {
+   "method": "test normality+equal-variance first; t-test if met else Mann-Whitney/Welch; report effect size + 95% CI, not just p",
+   "see": "statistics-rigor (A)(C)"
+  },
+  "compare_multi_groups": {
+   "method": "one-way ANOVA + Tukey/Dunnett with multiplicity correction; name the test per panel",
+   "see": "statistics-rigor C7"
+  },
+  "two_factor": {
+   "method": "two-way ANOVA (interaction reported)",
+   "see": "S7"
+  },
+  "dose_response": {
+   "method": "fit model; report EC50/IC50 with CI + goodness",
+   "see": "S12"
+  },
+  "survival": {
+   "method": "Kaplan-Meier + log-rank; never an endpoint bar",
+   "see": "S31"
+  },
+  "agreement_pred_obs": {
+   "method": "parity (S13) + Bland-Altman (S14) + %PE / relative-L2 (domain); not bare R\u00b2",
+   "see": "S13/S14, domain-conventions"
+  },
+  "regression": {
+   "method": "report R2adj + residual plot + CI band; check heteroscedasticity",
+   "see": "statistics-rigor F1"
+  },
+  "model_selection": {
+   "method": "AIC/AICc/BIC and/or cross-validation over ranked candidates; not raw R\u00b2",
+   "see": "statistics-rigor F2/F3"
+  },
+  "dimensionality": {
+   "method": "SVD/PCA scree + variance-explained at r + reconstruction error",
+   "see": "S43/S44, statistics-rigor F5"
+  },
+  "dissolution_similarity": {
+   "method": "f2 / bootstrap-f2 (90% CI) / Mahalanobis + %RSD, n>=6-12",
+   "see": "S29, domain-conventions 0/B"
+  },
+  "PK_exposure": {
+   "method": "geometric mean, log-transform AUC/Cmax, 90% CI; BE = 80-125% of GMR CI",
+   "see": "S30/S25, domain-conventions 0/B"
+  },
+  "classifier_perf": {
+   "method": "ROC/PR + confusion/calibration + cross-validation",
+   "see": "S35/S36, statistics-rigor F3"
+  }
+ },
+ "decision_rules": [
+  {
+   "id": "R-bars",
+   "when": "intent~compare/magnitude & data~categorical",
+   "enforce": "bare bars hide the sample -> use dot-on-bar (S1) or strip (S2); AP1",
+   "ref": "AP1"
+  },
+  {
+   "id": "R-violin-n",
+   "when": "candidate S3/violin & n<20",
+   "enforce": "REJECT violin/box; use S1/S2",
+   "ref": "AP2"
+  },
+  {
+   "id": "R-diverging",
+   "when": "intent~magnitude/field & quantity unidirectional",
+   "enforce": "REJECT diverging/jet/rainbow; sequential viridis/cividis",
+   "ref": "AP3/AP12"
+  },
+  {
+   "id": "R-partsofwhole",
+   "when": "data~compositional / parts-of-whole",
+   "enforce": "REJECT pie/donut; stacked or side-by-side bar (S24)",
+   "ref": "AP10/AP11"
+  },
+  {
+   "id": "R-heatmap",
+   "when": "candidate S17/S40 (heatmap)",
+   "enforce": "REQUIRE reorder rows/cols (AP5) + cap outliers ~95pct (AP6)",
+   "ref": "AP5/AP6"
+  },
+  {
+   "id": "R-bar-meadow",
+   "when": "many bars across a factor",
+   "enforce": "facet/small-multiples (M7) instead of a bar meadow",
+   "ref": "AP4"
+  },
+  {
+   "id": "R-zerobase",
+   "when": "bar chart",
+   "enforce": "bars zero-based, no broken axis (length encodes value)",
+   "ref": "AP9"
+  },
+  {
+   "id": "R-PK",
+   "when": "domain~PK & intent~exposure/compare",
+   "enforce": "REJECT mean\u00b1SD-linear + t-test; geometric mean, log, 90% CI (S30/S25)",
+   "ref": "DS5"
+  },
+  {
+   "id": "R-dissolution",
+   "when": "domain~dissolution",
+   "enforce": "profile (S29) + f2/bootstrap-f2/Mahalanobis + %RSD; not a single-endpoint bar + ANOVA",
+   "ref": "DS5"
+  },
+  {
+   "id": "R-modelval",
+   "when": "domain in CFD/PINN/IVIVC & intent~agreement/validation",
+   "enforce": "REQUIRE parity (S13) + Bland-Altman/%PE/GCI/relative-L2 (S14/S20)",
+   "ref": "DS5, M9"
+  },
+  {
+   "id": "R-palette",
+   "when": "a journal palette is requested but colorblind_safe==false",
+   "enforce": "WARN; keep okabe_ito default OR add redundant encoding (position+direct label+marker/shape)",
+   "ref": "AP12, pub-ready R4/R5"
+  }
+ ]
+}
