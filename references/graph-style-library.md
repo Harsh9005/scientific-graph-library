@@ -207,7 +207,7 @@ Example: `--intent "compare means" --data categorical --n 4 --domain PK` → rec
 - **Best point:** **the landscape then the proof** — compress a high-dimensional multiplex into one glance, then quantify the few that matter. Avoids both an unreadable wall of bars and a heatmap with no statistics.
 - **Use when:** many variables × few conditions, quantity is a signed fold-change. **NOT when:** the quantity is not signed (use a sequential, not diverging, scale).
 - **Pairing:** heatmap (gestalt) → zoom bars (S6-style) for the decisive few; share the arm color key.
-- **Domain note:** directly portable to **CFD/PBPK parameter sweeps** and **PINN hyperparameter maps** — sensitivity as a heatmap, then zoom bars for the dominant parameters (see the figure-strategy Example 3 rebuild).
+- **Domain note:** directly portable to **CFD/PBPK parameter sweeps** and **PINN hyperparameter maps** — sensitivity as a heatmap, then zoom bars for the dominant parameters.
 
 **S18. Tornado / forest sensitivity plot** [D]
 - **Shows:** the swing in an output as each input is varied ±, bars sorted by magnitude around a base-case line.
@@ -284,7 +284,7 @@ Example: `--intent "compare means" --data categorical --n 4 --domain PK` → rec
 - **Best point:** the **divergence of curves over time IS the finding** — durability, recovery, decline kinetics.
 - **Use when:** a continuous readout sampled over time. **NOT when:** one endpoint (then it is a bar — but ask whether you are throwing away the profile).
 - **Pairing:** kinetic line (S28) → AUC summary bar (S24); hero condition in the accent hue.
-- **Domain note:** **dissolution** and **PK** profiles are this family — see S17-release and S21-PK. Never reduce a release/PK profile to a single-timepoint bar (figure-strategy Example 2 anti-pattern).
+- **Domain note:** **dissolution** and **PK** profiles are this family — see S17-release and S21-PK. Never reduce a release/PK profile to a single-timepoint bar.
 
 **S29. Dissolution / release profile overlay (% released vs time)** [D]
 - **Shows:** cumulative % released vs time for each formulation + the reference product, with n ≥ 6–12 and error bars.
@@ -469,6 +469,6 @@ The exemplars never dump panels; each figure walks **one act** of the argument i
 
 ---
 
-*Reference document — Graph-Style Library dimension. Styles tagged [E] are grounded in the 5 exemplar mining files in `_exemplar_mining/`; styles tagged [D] are the domain-required families (`domain-conventions.md`) the wet-lab corpus lacks; styles tagged [K] (GROUP 8, S38–S45) are the in-silico / signal / dimensionality families distilled from Nathan Kutz's `ScientificComputing` repo (`Data-Driven Modeling & Scientific Computation`, 2nd ed.; https://github.com/nathankutz/ScientificComputing) — technique/idiom only, no code copied. Selecting a style is a DS1 craft decision; the domain-correctness of that style is a DS5 gate — read both modules together. GROUP-8 styles carry a hard scope rule: they are for modeling / signal / data-analysis deliverables and must never be laundered onto wet-lab dissolution / PK / BE / biological-endpoint outputs.*
+*Reference document — Graph-Style Library dimension. Styles tagged [E] are grounded in the 5 exemplar mining files in `_exemplar_mining/`; styles tagged [D] are the domain-required families (`domain-conventions.md`) the wet-lab corpus lacks; styles tagged [K] (GROUP 8, S38–S45) are the in-silico / signal / dimensionality families distilled from Nathan Kutz's `ScientificComputing` repo (`Data-Driven Modeling & Scientific Computation`, 2nd ed.; https://github.com/nathankutz/ScientificComputing) — technique/idiom only, no code copied. Selecting a style is a craft decision; the domain-correctness of that style is a separate check — read the domain notes alongside. GROUP-8 styles carry a hard scope rule: they are for modeling / signal / data-analysis deliverables and must never be laundered onto wet-lab dissolution / PK / BE / biological-endpoint outputs.*
 
 *Access model: don't browse this file top-to-bottom — use the **DECISION LAYER** at the top (`scripts/choose_graph.py`, backed by `scripts/graph_catalog.json`) to get a ranked answer + the enforced anti-patterns + palette/engine/stat in one call; the **ANTI-PATTERN REGISTRY** (AP1–AP16, from `FriendsDontLetFriends`, MIT) is the reject-rule set; journal style-engines (SciencePlots, ultraplot — MIT) and colorblind-gated journal palettes (ggsci/ggprism hex; GPL-3 code NOT used) live in `publication-ready-figures.md` R4/R12. The style entries here are the detail the chooser points into.*

@@ -1,8 +1,6 @@
-# Data-Strength Elevator — a scientific figure & data-presentation library
+# Scientific Graph Library
 
-A reusable library for raising the **data-presentation strength** of a manuscript or grant to elite-journal standard: a curated **graph-style library** with a **deterministic decision engine**, a **reviewer-proof statistics** reference, domain-correct conventions for pharmaceutical / modelling work (IVIVC, dissolution, PK, PBPK, CFD, PINN), and a **gallery of 103 publication-quality example figures** built from synthetic data.
-
-The goal is simple: stop *searching* for "which chart should I use?" and instead **decide** — with the rules for a high-impact figure enforced automatically.
+Two things stand between a rough plot and a figure a journal editor will trust, and neither gets taught in any one place. The first is knowing which of the fifty-odd chart types actually fits the data in front of you, instead of reaching for a bar chart because that's the reflex. The second is craft — the small, unglamorous rules you tend to learn the hard way, somewhere around the second round of reviewer comments: colours that still separate for a colour-blind reader, points drawn on top of bars rather than hidden behind them, a sequential colour map instead of the rainbow, real vector output. I kept re-deriving that same handful of rules every time I built a figure, so I collected them here, and I added a small program that just answers "which chart should I use?" rather than leaving you to scroll and guess.
 
 <p align="center">
   <img src="examples/png/C07_dot_on_bar.png" width="30%"/>
@@ -10,19 +8,16 @@ The goal is simple: stop *searching* for "which chart should I use?" and instead
   <img src="examples/png/H06_field_heatmap.png" width="28%"/>
 </p>
 
----
-
-## What's inside
+## What's here
 
 | Path | What it is |
 |---|---|
-| [`references/graph-style-library.md`](references/graph-style-library.md) | **45 graph styles** across 8 purposes + a **decision layer** + a 16-rule **anti-pattern registry** |
-| [`references/publication-ready-figures.md`](references/publication-ready-figures.md) | Hard publication-craft standards: zero-overlap audit, print legibility, one colorblind-safe palette, per-entity consistency, screen-reader accessibility, **journal style-engines** (SciencePlots, ultraplot) and colorblind-gated journal palettes |
-| [`references/statistics-rigor.md`](references/statistics-rigor.md) | Reviewer-proof statistics standard + a modeling / data-science statistics layer |
-| [`references/domain-conventions.md`](references/domain-conventions.md) | Anti-mis-transfer conventions for IVIVC / dissolution / PK / PBPK / CFD / PINN |
-| [`scripts/graph_catalog.json`](scripts/graph_catalog.json) | Single machine-readable index: styles + anti-patterns + palettes + style-engines + stat-methods |
-| [`scripts/choose_graph.py`](scripts/choose_graph.py) | **Decision engine** — intent → ranked styles + enforced anti-patterns + palette/engine/stat |
-| [`examples/`](examples/) | **103** publication-quality example figures across 9 categories (PNG + vector PDF) + the generator |
+| [`references/graph-style-library.md`](references/graph-style-library.md) | **45 graph styles** across 8 purposes, a **decision layer**, and a 16-rule **anti-pattern registry** |
+| [`scripts/choose_graph.py`](scripts/choose_graph.py) | A **decision engine** — describe your intent and it returns ranked styles, the anti-patterns it rejects for your case, and the palette to use |
+| [`scripts/graph_catalog.json`](scripts/graph_catalog.json) | The machine-readable index the engine reads (styles, anti-patterns, palettes, style-engines, methods) |
+| [`references/publication-ready-figures.md`](references/publication-ready-figures.md) | The craft rules: zero-overlap checks, one colorblind-safe palette, typography, accessibility, journal style-engines (SciencePlots, ultraplot), journal color cycles |
+| [`references/statistics-rigor.md`](references/statistics-rigor.md), [`references/domain-conventions.md`](references/domain-conventions.md) | The statistics behind the graphs, and how to keep them domain-correct for IVIVC / dissolution / PK / PBPK / CFD / PINN work |
+| [`examples/`](examples/) | **103** worked example figures across 9 categories (PNG + vector PDF) and the script that draws them |
 
 ## The decision engine
 
@@ -30,38 +25,40 @@ The goal is simple: stop *searching* for "which chart should I use?" and instead
 python3 scripts/choose_graph.py --intent "compare means" --data categorical --n 4 --domain PK
 ```
 ```
-## Recommended styles (ranked)
-  S1  Bar + overlaid individual data points (dot-on-bar)   [intent:compare, domain:PK]
-  S25 Confidence-interval / equivalence forest
-  S30 Semi-log PK concentration–time profile
-## Rules enforced
-  [AP2]  REJECT violin/box; use S1/S2                (n < 20)
-  [DS5]  REJECT mean±SD-linear + t-test; geometric mean, log, 90% CI
-## Palette: okabe_ito (colorblind-safe)   ## Stat: geometric mean / 90% CI (BE 80–125%)
+Recommended styles (ranked)
+  S1   Bar + individual data points (dot-on-bar)
+  S25  Confidence-interval / equivalence forest
+  S30  Semi-log PK concentration-time profile
+Rules enforced
+  AP2  drop the violin/box — quartiles are unstable below n = 20
+  DS5  drop mean±SD + t-test — PK wants geometric mean, log axis, 90% CI
+Palette: Okabe-Ito (colorblind-safe)     Method: geometric mean / 90% CI (BE 80-125%)
 ```
 
-It queries `graph_catalog.json`, so styles and rules are stored once and answered instantly — no browsing. Options: `--intent --data --n --domain --journal --json`.
+An intent is all it really needs, but a sharper answer comes back if you also pass the shape of the data, the sample size, the domain, and the journal you're aiming at. The catalog is read and you get a short ranked list with the reasoning already attached — which was the whole point, since I never wanted a menu, I wanted the decision made. The flags are `--intent --data --n --domain --journal --json`.
 
 ## The example gallery
 
-**103** modern, high-impact-journal-ready figures across 9 categories (distributions, correlation, comparison, part-of-whole, flow/network, time-series, scientific/biomedical, 3D/fields, specialized) from **synthetic, seeded data**, each following the library's rules (one colorblind-safe palette, points-on-bars, exact P-values, sequential colormaps, vector output). See **[examples/README.md](examples/README.md)**. Regenerate with:
+There are 103 figures, and each one is drawn from synthetic seeded data, so anyone who reruns the script gets exactly the same picture back rather than something that drifts between machines. They were built to obey the same rules the library preaches, which felt like the only honest way to ship it: a single colorblind-safe palette, points on the bars, exact statistics, sequential colour maps instead of jet, clean axes, vector output. The full set is laid out with a caption on each in **[examples/README.md](examples/README.md)**. Redrawing them is a two-line job:
 
 ```bash
 pip install -r requirements.txt          # matplotlib, numpy, scipy, seaborn, networkx, pandas (no LaTeX)
 python3 examples/generate_gallery.py
 ```
 
-## Design principles
+The nine categories run from the everyday to the specialized: distributions, correlation, comparison, part-of-whole, flow and network, time-series, scientific and biomedical, 3D and fields, and the multi-panel layouts you reach for when several small pictures have to read as one story.
 
-- **Decide, don't browse.** A machine-readable catalog + a chooser, not a wall of options.
-- **Colorblind-safe by default** (Okabe-Ito; Wong 2011). Journal palettes are opt-in and gated by a colorblind check.
-- **Anti-patterns are enforced, not just listed** — bars that hide distributions, violins at small n, jet colormaps, pie/donuts, unreordered heatmaps (AP1–AP16, with primary-literature citations).
-- **Domain-correct.** Modelling/data-science techniques never launder onto wet-lab endpoints; PK gets geometric mean + 90% CI, dissolution gets f2, models get parity + agreement.
+## What it stands on
 
-## Attribution
+- **Decide, don't hunt.** A catalog paired with a chooser beats a wall of options you scroll past — most of all at four in the afternoon, when the figure was due an hour ago.
+- **Colorblind-safe by default.** Okabe-Ito is used unless you ask for something else (Wong 2011). The journal colour cycles are there when a house style insists on one, but you're warned whenever the cycle you picked isn't actually colorblind-safe.
+- **The mistakes are enforced, not just listed.** Bars that hide a distribution, violins at tiny n, jet colour maps, pie and donut charts, heatmaps whose rows were never sorted — sixteen anti-patterns are encoded (AP1 through AP16), each tied back to the paper that documented it.
+- **Domain-aware.** A modeling trick is never quietly laundered onto a wet-lab endpoint. PK is given geometric means and 90% CIs, dissolution is judged by f2, and a model is asked for parity and agreement before anyone has to believe it.
 
-Graph-style variety and modeling statistics distilled (technique/idiom only) from [Nathan Kutz's *Data-Driven Modeling & Scientific Computation*](https://github.com/nathankutz/ScientificComputing). Anti-pattern registry from [FriendsDontLetFriends](https://github.com/cxli233/FriendsDontLetFriends) (MIT) with its cited literature (Wong 2011, Weissgerber 2015). Journal style-engines from [SciencePlots](https://github.com/garrettj403/SciencePlots) and [ultraplot](https://github.com/ultraplot/ultraplot) (MIT); journal palette hex from [ggsci](https://github.com/nanxstats/ggsci) / [ggprism](https://github.com/csdaw/ggprism) (colour values are facts; their GPL-3 code is not used). Figure standards benchmarked against Nature-family exemplars (see `references/_exemplar_mining/`).
+## Where it comes from
+
+The breadth of graph types and the modeling-statistics notes were distilled — as technique, not code — from [Nathan Kutz's *Data-Driven Modeling & Scientific Computation*](https://github.com/nathankutz/ScientificComputing). The anti-pattern registry comes from [FriendsDontLetFriends](https://github.com/cxli233/FriendsDontLetFriends) (MIT), with the literature it cites (Wong 2011, Weissgerber 2015). The journal style-engines are [SciencePlots](https://github.com/garrettj403/SciencePlots) and [ultraplot](https://github.com/ultraplot/ultraplot), both MIT; the journal palette hex values were lifted from [ggsci](https://github.com/nanxstats/ggsci) and [ggprism](https://github.com/csdaw/ggprism), on the view that a colour value is a fact and their GPL-3 code could be left alone. The standards the figures are held to were benchmarked against a handful of Nature-family papers, and those analyses are kept in `references/_exemplar_mining/`.
 
 ## License
 
-MIT — see [LICENSE](LICENSE). The example data are synthetic and illustrative.
+MIT — see [LICENSE](LICENSE). The example data are synthetic throughout.

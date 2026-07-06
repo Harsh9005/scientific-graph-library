@@ -11,7 +11,7 @@ chosen chart is finished. -->
 
 *A figure is not "done" when it is correct; it is done when it is **submission-ready**: zero text overlap, legible at 100% / print size, typographically matched to the manuscript, on one consistent colorblind-safe theme, per-entity consistent across every display, rendered with consistent line/point weight so every series and data point stays distinguishable, accessible to screen-reader as well as colorblind readers, uniformly scaled across the whole figure suite, coherent as a single visual story, and **cited in the body text**. Each rule below is written to be checked, not admired. The exemplar craft (`_exemplar_mining/*.md §4`) is the evidence base; the entity mapping is instantiated for this manuscript's sunscreen-filter set.*
 
-**Two rules are BLOCKERS** (a 0 caps the DS1 grade to Not-ready, per `scoring-rubric.md`): **F-overlap** (zero text overlap) and **F-cite** (every figure/table cited in text). The user requires publication-ready output; these are not negotiable.
+**Two rules are non-negotiable** — a figure that fails either is not publication-ready: **F-overlap** (zero text overlap) and **F-cite** (every figure/table cited in text).
 
 ---
 
@@ -289,7 +289,7 @@ Oxybenzone is the accent because it is the watch-item; it is orange + circle in 
 1. **One visual language, everywhere.** F-theme (R4) palette, F-entity (R5) color+shape map, F-style (R3) typography, and F-scale (R9) sizes are held constant across all figures — the four consistency checks are what *produce* single-story coherence.
 2. **Repeated chart idioms for repeated questions.** The same kind of analytical question uses the same chart primitive throughout (e.g. every dose–response is the same S12 idiom; every parity plot the same S-parity idiom), so form signals meaning consistently (`graph-style-library.md`).
 3. **Twinned / paralleled panels.** Panels that differ in one variable (organism, timepoint, dose, readout) share axes, palette, and mirrored layout so the reader learns the panel once and reads its twin free (`natbiotech2025 §64`, `natmater2024 §4` faceted rows).
-4. **Deliberate figure order.** The figure sequence traces the argument — setup → mechanism → validation → translation — so the suite has a narrative arc, not a pile of unordered plots (`figure-strategy.md` P6, translational ladder F15).
+4. **Deliberate figure order.** The figure sequence traces the argument — setup → mechanism → validation → translation — so the suite has a narrative arc, not a pile of unordered plots.
 
 **How to verify.** Lay the figures out in order and ask: do they look like one paper (same palette/type/sizing/idioms), and does the sequence build one argument? If a figure looks like it came from a different manuscript, or the order does not advance a story, F-suite fails.
 
@@ -310,9 +310,9 @@ A figure/table is **submission-ready** only when it passes ALL of:
 - [ ] **F-suite** — the figures share one visual language and a deliberate order, reading as a single story.
 - [ ] **F-cite** — every figure and table is called out in the body text at the point it supports. *(BLOCKER)*
 
-Plus the correctness/craft checks from `figure-strategy.md §C` (points-on-bars, benchmark-on-axis, SD/n defined, right primitive) and the domain-correctness gate from `domain-conventions.md` (no laundered wet-lab defaults). A figure that is correct but fails any gate item is **not done**. If either BLOCKER (F-overlap, F-cite) scores 0, the DS1 grade is capped at Not-ready regardless of everything else.
+Plus the core correctness checks (points-on-bars, benchmark-on-axis, SD/n defined, the right chart primitive) and the domain-correctness gate from `domain-conventions.md` (no laundered wet-lab defaults). A figure that is correct but fails any gate item is **not done**; F-overlap and F-cite are the two that make a figure unusable if missed.
 
-**Reporting.** Record the R11 checklist result per figure in `templates/strengthening-report.md`. State honestly which items passed on inspection versus which need the author's source files (e.g., "F-zoom cannot be confirmed until the vector export is regenerated at 300 dpi").
+**Reporting.** Record the R11 checklist result per figure. State honestly which items passed on inspection versus which need the author's source files (e.g., "F-zoom cannot be confirmed until the vector export is regenerated at 300 dpi").
 
 ---
 
@@ -331,4 +331,4 @@ Use `choose_graph.py` to get the right engine + palette for a target journal in 
 
 ---
 
-*Reference document — Publication-Ready Figure Craft dimension. Grounded in the print-legibility / color / typography practice mined from the 5 exemplars (`_exemplar_mining/*.md §4`) and the user's publication-ready + mandatory-citation requirements, extended with journal style-engines (SciencePlots, ultraplot) and colorblind-gated journal color cycles (ggsci/ggprism hex). F-overlap and F-cite are blockers; see `scoring-rubric.md` for how they cap the grade.*
+*Reference — publication-ready figure craft. Grounded in the print-legibility / color / typography practice mined from the 5 exemplars (`_exemplar_mining/*.md §4`), extended with journal style-engines (SciencePlots, ultraplot) and colorblind-gated journal color cycles (ggsci/ggprism hex). F-overlap and F-cite are the two non-negotiable checks.*
