@@ -1,13 +1,13 @@
 # Data-Strength Elevator — a scientific figure & data-presentation library
 
-A reusable library for raising the **data-presentation strength** of a manuscript or grant to elite-journal standard: a curated **graph-style library** with a **deterministic decision engine**, a **reviewer-proof statistics** reference, domain-correct conventions for pharmaceutical / modelling work (IVIVC, dissolution, PK, PBPK, CFD, PINN), and a **gallery of 20 publication-quality example figures** built from synthetic data.
+A reusable library for raising the **data-presentation strength** of a manuscript or grant to elite-journal standard: a curated **graph-style library** with a **deterministic decision engine**, a **reviewer-proof statistics** reference, domain-correct conventions for pharmaceutical / modelling work (IVIVC, dissolution, PK, PBPK, CFD, PINN), and a **gallery of 103 publication-quality example figures** built from synthetic data.
 
 The goal is simple: stop *searching* for "which chart should I use?" and instead **decide** — with the rules for a high-impact figure enforced automatically.
 
 <p align="center">
-  <img src="examples/png/fig01_dot_on_bar.png" width="30%"/>
-  <img src="examples/png/fig15_scree_pca.png" width="37%"/>
-  <img src="examples/png/fig14_field_heatmap.png" width="28%"/>
+  <img src="examples/png/C07_dot_on_bar.png" width="30%"/>
+  <img src="examples/png/G14_scree_pca.png" width="37%"/>
+  <img src="examples/png/H06_field_heatmap.png" width="28%"/>
 </p>
 
 ---
@@ -22,7 +22,7 @@ The goal is simple: stop *searching* for "which chart should I use?" and instead
 | [`references/domain-conventions.md`](references/domain-conventions.md) | Anti-mis-transfer conventions for IVIVC / dissolution / PK / PBPK / CFD / PINN |
 | [`scripts/graph_catalog.json`](scripts/graph_catalog.json) | Single machine-readable index: styles + anti-patterns + palettes + style-engines + stat-methods |
 | [`scripts/choose_graph.py`](scripts/choose_graph.py) | **Decision engine** — intent → ranked styles + enforced anti-patterns + palette/engine/stat |
-| [`examples/`](examples/) | 20 publication-quality example figures (PNG + vector PDF) + the generator |
+| [`examples/`](examples/) | **103** publication-quality example figures across 9 categories (PNG + vector PDF) + the generator |
 
 ## The decision engine
 
@@ -44,10 +44,11 @@ It queries `graph_catalog.json`, so styles and rules are stored once and answere
 
 ## The example gallery
 
-20 modern, high-impact-journal-ready figures from **synthetic, seeded data**, each following the library's rules (one colorblind-safe palette, points-on-bars, exact P-values, sequential colormaps, vector output). See **[examples/README.md](examples/README.md)**. Regenerate with:
+**103** modern, high-impact-journal-ready figures across 9 categories (distributions, correlation, comparison, part-of-whole, flow/network, time-series, scientific/biomedical, 3D/fields, specialized) from **synthetic, seeded data**, each following the library's rules (one colorblind-safe palette, points-on-bars, exact P-values, sequential colormaps, vector output). See **[examples/README.md](examples/README.md)**. Regenerate with:
 
 ```bash
-python3 examples/generate_gallery.py     # needs matplotlib + numpy + scipy (no LaTeX)
+pip install -r requirements.txt          # matplotlib, numpy, scipy, seaborn, networkx, pandas (no LaTeX)
+python3 examples/generate_gallery.py
 ```
 
 ## Design principles

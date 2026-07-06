@@ -1,0 +1,7 @@
+# Core (decision engine + scorer need only the standard library; these are for the example gallery)
+matplotlib>=3.8
+numpy>=1.24
+scipy>=1.10
+seaborn>=0.13
+networkx>=3.0
+pandas>=2.0

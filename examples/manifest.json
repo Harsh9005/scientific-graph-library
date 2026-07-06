@@ -1,0 +1,517 @@
+[
+ [
+  "Distributions",
+  "A01_histogram",
+  "single distribution"
+ ],
+ [
+  "Distributions",
+  "A02_histogram_multiple",
+  "compare two distributions"
+ ],
+ [
+  "Distributions",
+  "A03_histogram_kde",
+  "density overlay"
+ ],
+ [
+  "Distributions",
+  "A04_hist2d",
+  "joint density (binned)"
+ ],
+ [
+  "Distributions",
+  "A05_hexbin",
+  "joint density (hex)"
+ ],
+ [
+  "Distributions",
+  "A06_kde",
+  "smooth density"
+ ],
+ [
+  "Distributions",
+  "A07_kde_multiple",
+  "compare densities"
+ ],
+ [
+  "Distributions",
+  "A08_ridgeline",
+  "distribution over an ordered factor"
+ ],
+ [
+  "Distributions",
+  "A09_box_grouped",
+  "distribution summary + raw"
+ ],
+ [
+  "Distributions",
+  "A10_box_notched",
+  "median confidence via notch"
+ ],
+ [
+  "Distributions",
+  "A11_violin",
+  "distribution shape at large n"
+ ],
+ [
+  "Distributions",
+  "A12_violin_split",
+  "distribution by two factors"
+ ],
+ [
+  "Distributions",
+  "A13_raincloud",
+  "half-violin + strip"
+ ],
+ [
+  "Distributions",
+  "A14_strip",
+  "every point at small n"
+ ],
+ [
+  "Distributions",
+  "A15_ecdf",
+  "cumulative distribution"
+ ],
+ [
+  "Distributions",
+  "A16_qq",
+  "distributional check"
+ ],
+ [
+  "Correlation",
+  "B01_scatter",
+  "two continuous variables"
+ ],
+ [
+  "Correlation",
+  "B02_scatter_groups",
+  "grouped scatter"
+ ],
+ [
+  "Correlation",
+  "B03_bubble",
+  "third variable via size"
+ ],
+ [
+  "Correlation",
+  "B04_regression",
+  "linear fit with confidence band"
+ ],
+ [
+  "Correlation",
+  "B05_marginal",
+  "joint + marginal distributions"
+ ],
+ [
+  "Correlation",
+  "B06_connected_scatter",
+  "ordered trajectory in 2D"
+ ],
+ [
+  "Correlation",
+  "B07_corr_heatmap",
+  "pairwise correlations"
+ ],
+ [
+  "Correlation",
+  "B08_clustermap",
+  "reordered heatmap + dendrograms"
+ ],
+ [
+  "Correlation",
+  "B09_density2d",
+  "smooth joint density"
+ ],
+ [
+  "Correlation",
+  "B10_pairplot",
+  "all pairwise relationships"
+ ],
+ [
+  "Correlation",
+  "B11_parity",
+  "model calibration"
+ ],
+ [
+  "Correlation",
+  "B12_bland_altman",
+  "method agreement + LoA"
+ ],
+ [
+  "Correlation",
+  "B13_residual",
+  "diagnostic for a fit"
+ ],
+ [
+  "Correlation",
+  "B14_loess",
+  "nonparametric trend"
+ ],
+ [
+  "Comparison",
+  "C01_bar",
+  "categorical magnitude (zero-based)"
+ ],
+ [
+  "Comparison",
+  "C02_bar_horizontal",
+  "ranked categories"
+ ],
+ [
+  "Comparison",
+  "C03_grouped_bar",
+  "two-factor comparison"
+ ],
+ [
+  "Comparison",
+  "C04_stacked_bar",
+  "composition per category"
+ ],
+ [
+  "Comparison",
+  "C05_percent_stacked",
+  "proportion per category"
+ ],
+ [
+  "Comparison",
+  "C06_diverging_bar",
+  "signed values around zero"
+ ],
+ [
+  "Comparison",
+  "C07_dot_on_bar",
+  "bars never hide the sample (AP1)"
+ ],
+ [
+  "Comparison",
+  "C08_lollipop",
+  "ranked values, low ink"
+ ],
+ [
+  "Comparison",
+  "C09_cleveland_dumbbell",
+  "paired change per category"
+ ],
+ [
+  "Comparison",
+  "C10_radar",
+  "multivariate profile"
+ ],
+ [
+  "Comparison",
+  "C11_parallel_coords",
+  "high-dim comparison"
+ ],
+ [
+  "Comparison",
+  "C12_slope",
+  "before/after ranking change"
+ ],
+ [
+  "Comparison",
+  "C13_bump",
+  "rank evolution over time"
+ ],
+ [
+  "Comparison",
+  "C14_point_ci",
+  "position-based estimates"
+ ],
+ [
+  "Part-of-whole",
+  "D01_stacked_area",
+  "composition over time"
+ ],
+ [
+  "Part-of-whole",
+  "D02_treemap",
+  "hierarchical proportions"
+ ],
+ [
+  "Part-of-whole",
+  "D03_sunburst",
+  "nested hierarchy"
+ ],
+ [
+  "Part-of-whole",
+  "D04_venn",
+  "set overlap"
+ ],
+ [
+  "Part-of-whole",
+  "D05_dendrogram",
+  "hierarchical clustering"
+ ],
+ [
+  "Part-of-whole",
+  "D06_waffle",
+  "part-of-whole as unit squares"
+ ],
+ [
+  "Part-of-whole",
+  "D07_mosaic",
+  "two categorical variables"
+ ],
+ [
+  "Flow-Network",
+  "E01_sankey",
+  "mass/flow balance"
+ ],
+ [
+  "Flow-Network",
+  "E02_network",
+  "nodes + edges, degree-scaled"
+ ],
+ [
+  "Flow-Network",
+  "E03_arc",
+  "network on a line"
+ ],
+ [
+  "Flow-Network",
+  "E04_bipartite",
+  "two-set relationships"
+ ],
+ [
+  "Flow-Network",
+  "E05_adjacency",
+  "network as a matrix"
+ ],
+ [
+  "Time-series",
+  "F01_line",
+  "single series over time"
+ ],
+ [
+  "Time-series",
+  "F02_multiline",
+  "several series"
+ ],
+ [
+  "Time-series",
+  "F03_line_ci",
+  "trajectory + uncertainty"
+ ],
+ [
+  "Time-series",
+  "F04_area",
+  "magnitude over time"
+ ],
+ [
+  "Time-series",
+  "F05_streamgraph",
+  "flowing composition"
+ ],
+ [
+  "Time-series",
+  "F06_waterfall",
+  "family of profiles"
+ ],
+ [
+  "Time-series",
+  "F07_candlestick",
+  "financial time-series"
+ ],
+ [
+  "Time-series",
+  "F08_spectrogram",
+  "time\u2013frequency (chirp)"
+ ],
+ [
+  "Time-series",
+  "F09_decomposition",
+  "trend + seasonal + residual"
+ ],
+ [
+  "Time-series",
+  "F10_step",
+  "piecewise-constant series"
+ ],
+ [
+  "Scientific",
+  "G01_dose_response",
+  "sigmoidal fit"
+ ],
+ [
+  "Scientific",
+  "G02_kaplan_meier",
+  "time-to-event"
+ ],
+ [
+  "Scientific",
+  "G03_forest",
+  "effect sizes across studies"
+ ],
+ [
+  "Scientific",
+  "G04_pk_semilog",
+  "geometric mean, log axis"
+ ],
+ [
+  "Scientific",
+  "G05_dissolution",
+  "profile + f2"
+ ],
+ [
+  "Scientific",
+  "G06_roc",
+  "classifier discrimination"
+ ],
+ [
+  "Scientific",
+  "G07_pr_curve",
+  "PR for imbalanced classes"
+ ],
+ [
+  "Scientific",
+  "G08_calibration",
+  "probability reliability"
+ ],
+ [
+  "Scientific",
+  "G09_confusion",
+  "per-class classifier behaviour"
+ ],
+ [
+  "Scientific",
+  "G10_volcano",
+  "differential expression"
+ ],
+ [
+  "Scientific",
+  "G11_manhattan",
+  "GWAS-style genome scan"
+ ],
+ [
+  "Scientific",
+  "G12_ma_plot",
+  "intensity-dependent ratio"
+ ],
+ [
+  "Scientific",
+  "G13_tornado",
+  "ranked parameter influence"
+ ],
+ [
+  "Scientific",
+  "G14_scree_pca",
+  "rank + structure"
+ ],
+ [
+  "Scientific",
+  "G15_biplot",
+  "scores + loadings"
+ ],
+ [
+  "Scientific",
+  "G16_embedding",
+  "nonlinear low-dim embedding"
+ ],
+ [
+  "Scientific",
+  "G17_stem",
+  "discrete/sparse coefficients"
+ ],
+ [
+  "Scientific",
+  "G18_bifurcation",
+  "route to chaos (logistic map)"
+ ],
+ [
+  "Scientific",
+  "G19_gci",
+  "mesh-independence / order"
+ ],
+ [
+  "Scientific",
+  "G20_control_chart",
+  "process monitoring \u00b13\u03c3"
+ ],
+ [
+  "3D-Fields",
+  "H01_surface3d",
+  "solution field u(x,t)"
+ ],
+ [
+  "3D-Fields",
+  "H02_wireframe",
+  "surface as mesh"
+ ],
+ [
+  "3D-Fields",
+  "H03_scatter3d",
+  "three continuous variables"
+ ],
+ [
+  "3D-Fields",
+  "H04_contour",
+  "iso-lines of a field"
+ ],
+ [
+  "3D-Fields",
+  "H05_contourf",
+  "field with colorbar"
+ ],
+ [
+  "3D-Fields",
+  "H06_field_heatmap",
+  "2D field, viridis (never jet)"
+ ],
+ [
+  "3D-Fields",
+  "H07_quiver",
+  "vector field arrows"
+ ],
+ [
+  "3D-Fields",
+  "H08_streamplot",
+  "flow streamlines"
+ ],
+ [
+  "3D-Fields",
+  "H09_polar",
+  "periodic / directional data"
+ ],
+ [
+  "3D-Fields",
+  "H10_ternary",
+  "3-component composition"
+ ],
+ [
+  "Specialized",
+  "I01_multipanel_abc",
+  "composed figure with a/b/c labels"
+ ],
+ [
+  "Specialized",
+  "I02_small_multiples",
+  "one grammar, many panels"
+ ],
+ [
+  "Specialized",
+  "I03_annotated_heatmap",
+  "matrix with cell values"
+ ],
+ [
+  "Specialized",
+  "I04_horizon",
+  "dense time-series in little height"
+ ],
+ [
+  "Specialized",
+  "I05_upset",
+  "many-set intersections"
+ ],
+ [
+  "Specialized",
+  "I06_colormap_demo",
+  "perceptual uniformity, not rainbow"
+ ],
+ [
+  "Specialized",
+  "I07_model_vs_data",
+  "overlay with uncertainty"
+ ]
+]
