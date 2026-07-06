@@ -9,7 +9,7 @@ domain-correct and which are laundered wet-lab defaults you must NOT copy. -->
 
 # Graph-Style Library — pick the sharpest chart for each point
 
-*A catalogue so an author has VARIETY to select from and can communicate the exact analytical point in the best possible way. Each entry gives: **what it shows**, the **analytical point** it communicates best, **when to use / when NOT**, a **multi-panel pairing** suggestion, and — where relevant — the **domain-correct note** for PK / PBPK / IVIVC / dissolution / CFD / PINN so the skill never launders a wet-lab default onto an in-silico or bioequivalence output.*
+*A catalogue so an author has VARIETY to select from and can communicate the exact analytical point in the best possible way. Each entry gives: **what it shows**, the **analytical point** it communicates best, **when to use / when NOT**, a **multi-panel pairing** suggestion, and — where relevant — the **domain-correct note** for PK / PBPK / IVIVC / dissolution / CFD / PINN so a domain-correct chart never launders a wet-lab default onto an in-silico or bioequivalence output.*
 
 **How to use this file.** In Phase 1 (DS1 audit) and Phase 7 (strengthening), for every claim ask *"what is the ONE analytical point this panel must land?"* then pick the style below whose "analytical point" matches. Do not pick by habit. A bar for a survival endpoint, or a bare contour for a "validated" CFD field, is a style-selection error that reads as naïveté to editors. The exemplars are disciplined: they reuse ~10–20 archetypes with iron consistency rather than chasing novelty — **restraint is the lesson**, but restraint *within a deliberately chosen* archetype, not defaulting to the same bar for everything.
 
