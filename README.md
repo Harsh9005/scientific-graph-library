@@ -44,8 +44,12 @@ There are 138 figures, and each one is drawn from synthetic seeded data, so anyo
 
 ```bash
 pip install -r requirements.txt          # matplotlib, numpy, scipy, seaborn, networkx, pandas (no LaTeX)
-python3 scripts/generate_gallery.py
+python3 scripts/generate_gallery.py                    # the full gallery, Okabe-Ito default
+python3 scripts/generate_gallery.py --palette npg      # or recolour it to any catalog palette
+python3 scripts/generate_gallery.py --list-palettes    # okabe_ito, npg, aaas, nejm, lancet, jama, prism_colorblind_safe
 ```
+
+The gallery page lays the thumbnails out three across so the whole set scrolls quickly, and `--palette` recolours every figure to a named palette from the catalog (a colorblind-safety warning prints for any non-Okabe choice). The PDFs are written without an embedded timestamp, so a rebuild that changed nothing produces byte-identical files.
 
 The ten categories run from the everyday to the specialized: distributions, correlation, comparison, part-of-whole, flow and network, time-series, scientific and biomedical, single-cell / omics / cytometry, 3D and fields, and the multi-panel layouts you reach for when several small pictures have to read as one story.
 

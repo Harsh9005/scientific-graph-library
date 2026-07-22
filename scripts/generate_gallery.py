@@ -51,6 +51,53 @@ OI = {"orange": "#E69F00", "blue": "#0072B2", "green": "#009E73", "purple": "#CC
       "black": "#000000"}
 CYCLE = [OI["orange"], OI["blue"], OI["green"], OI["purple"], OI["vermillion"], OI["sky"], OI["yellow"]]
 SEQ = "viridis"; DIV = "RdBu_r"
+# The seven categorical series slots above are the only "colours" a user usually wants to swap. SEQ
+# (sequential) and DIV (diverging) are perceptual colormaps — change them here if you need to, but keep
+# them perceptually-uniform (never jet). Swap the categorical palette without editing code via
+# `--palette` (see apply_palette / --list-palettes).
+
+_CB_SAFE_PALETTES = {"okabe_ito", "prism_colorblind_safe"}  # per graph_catalog.json palette notes
+_SERIES_SLOTS = ["orange", "blue", "green", "purple", "vermillion", "sky", "yellow"]
+
+
+def _load_palettes():
+    """Named categorical palettes, read from graph_catalog.json so there is one source of truth."""
+    import json
+    try:
+        with open(os.path.join(HERE, "graph_catalog.json"), encoding="utf-8") as f:
+            raw = json.load(f).get("palettes", {})
+    except Exception:
+        raw = {}
+    out = {}
+    for k, v in raw.items():
+        hexes = v if isinstance(v, list) else (v.get("cycle") or v.get("hex"))
+        if hexes:
+            out[k] = list(hexes)
+    out.setdefault("okabe_ito", CYCLE + [OI["grey"], OI["black"]])
+    return out
+
+
+def apply_palette(name):
+    """Recolour the whole gallery to a named palette (edit-free colour choice).
+
+    The seven categorical series slots (orange, blue, green, purple, vermillion, sky, yellow) take the
+    palette's colours in order — cycled if the palette is short — so every `OI["blue"]`-style reference
+    and the axes prop-cycle recolour together. grey/black stay neutral structural colours, and SEQ/DIV
+    are untouched. Prints a colorblind-safety warning for any non-Okabe palette, matching the library's
+    own rule that a colour cycle should stay colorblind-safe unless you deliberately opt out.
+    """
+    global CYCLE
+    pals = _load_palettes()
+    if name not in pals:
+        raise SystemExit(f"Unknown palette '{name}'. Choices: {', '.join(sorted(pals))}")
+    hexes = pals[name]
+    for i, slot in enumerate(_SERIES_SLOTS):
+        OI[slot] = hexes[i % len(hexes)]
+    CYCLE = [OI[s] for s in _SERIES_SLOTS]
+    set_style()
+    if name not in _CB_SAFE_PALETTES:
+        print(f"⚠ palette '{name}' is not verified colorblind-safe (see graph_catalog.json). "
+              f"okabe_ito and prism_colorblind_safe are the safe choices.\n")
 
 MANIFEST = []
 OVERLAPS = []  # (figure_name, [(labelA, labelB), ...]) — populated by the F16 text-overlap audit
@@ -83,8 +130,10 @@ def save(fig, name, note, cat):
                 OVERLAPS.append((name, hits))
         except Exception:
             pass  # a QC failure must never lose a figure
-    fig.savefig(os.path.join(PNG, name + ".png"))
-    fig.savefig(os.path.join(PDF, name + ".pdf"))
+    fig.savefig(os.path.join(PNG, name + ".png"), metadata={"Software": None})
+    # metadata={"CreationDate": None} strips the wall-clock timestamp matplotlib otherwise embeds in
+    # every PDF, so a rebuild that changed nothing visual produces a byte-identical file (no diff churn).
+    fig.savefig(os.path.join(PDF, name + ".pdf"), metadata={"CreationDate": None})
     plt.close(fig)
     MANIFEST.append((cat, name, note))
 
@@ -3437,6 +3486,7 @@ CATEGORY_EMOJI = {"Distributions": "📊", "Correlation": "🔗", "Comparison": 
 
 def write_readme():
     """Regenerate README.md from MANIFEST so the gallery index can never drift from the figures."""
+    import re
     from collections import Counter
     cats = Counter(c for c, _, _ in MANIFEST)
     order = [c for c in CATEGORY_ORDER if c in cats] + [c for c in cats if c not in CATEGORY_ORDER]
@@ -3467,16 +3517,32 @@ def write_readme():
         else:
             row += "|  |   |"
         L.append(row)
+    # jump index — HTML id anchors (reliable on GitHub; emoji-heading auto-anchors are not)
+    def _anchor(cat_name):
+        return "cat-" + re.sub(r"[^a-z0-9]+", "-", cat_name.lower()).strip("-")
+    L.append("**Jump to:** " + "  ·  ".join(
+        f"[{CATEGORY_EMOJI.get(c, '')} {c}](#{_anchor(c)})" for c in order) + "\n")
+    L.append("> Thumbnails are laid out three across; click any figure to open it full size. "
+             "Regenerate in a different colour palette with "
+             "`python3 scripts/generate_gallery.py --palette npg` "
+             "(`--list-palettes` for the choices; okabe_ito is the colorblind-safe default).\n")
     L.append("\n---\n")
     for c in order:
-        L.append(f"## {CATEGORY_EMOJI.get(c, '')} {c}\n")
-        for cat, name, note in MANIFEST:
-            if cat != c:
-                continue
-            num, rest = name.split("_", 1)
-            L.append(f"**{num}. {rest.replace('_', ' ').title()}** — *{note}*  ")
-            L.append(f"![{name}](png/{name}.png)\n")
-        L.append("")
+        items = [(name, note) for cat, name, note in MANIFEST if cat == c]
+        L.append(f'<a id="{_anchor(c)}"></a>')
+        L.append(f"## {CATEGORY_EMOJI.get(c, '')} {c}  ·  {len(items)} figures\n")
+        L.append("<table>")
+        for i in range(0, len(items), 3):  # three thumbnails per row
+            L.append("<tr>")
+            for name, note in items[i:i + 3]:
+                num, rest = name.split("_", 1)
+                cap = f"<b>{num}. {rest.replace('_', ' ').title()}</b><br/><sub>{note}</sub>"
+                L.append(f'<td width="33%" valign="top" align="center">'
+                         f'<a href="png/{name}.png"><img src="png/{name}.png" width="100%"/></a>'
+                         f'<br/>{cap}</td>')
+            L.append("</tr>")
+        L.append("</table>\n")
+        L.append(f"<sub>[↑ back to top](#example-gallery--{n}-publication-quality-figures)</sub>\n")
     L += ["---\n",
           f"*{n} figures generated by `scripts/generate_gallery.py` (seed 20260706) for the "
           "[data-strength-elevator](../) graph-style library. Palette: Okabe-Ito (Wong 2011). "
@@ -3505,7 +3571,19 @@ def main(argv=None):
                     help="render only one category (e.g. Omics-Cytometry). Does NOT clean other "
                          "outputs and does NOT rewrite manifest.json/README.md — use for a quick preview.")
     ap.add_argument("--list-categories", action="store_true")
+    ap.add_argument("--palette", default="okabe_ito",
+                    help="categorical palette for the whole gallery (default: okabe_ito). Choices come "
+                         "from graph_catalog.json — okabe_ito, npg, aaas, nejm, lancet, jama, "
+                         "prism_colorblind_safe. Non-Okabe palettes print a colorblind-safety warning.")
+    ap.add_argument("--list-palettes", action="store_true",
+                    help="list the available categorical palettes and exit")
     a = ap.parse_args(argv)
+
+    if a.list_palettes:
+        for k, v in _load_palettes().items():
+            safe = "  (colorblind-safe)" if k in _CB_SAFE_PALETTES else ""
+            print(f"  {k:22s} {len(v)} colours{safe}")
+        return
 
     if a.list_categories:
         from collections import Counter
@@ -3530,6 +3608,9 @@ def main(argv=None):
         clean_outputs()
 
     set_style()
+    if a.palette and a.palette != "okabe_ito":
+        apply_palette(a.palette)
+        print(f"Palette: {a.palette} (non-default)\n")
     if not partial:
         print(f"Generating comprehensive gallery ({len(registry)} figures, synthetic seeded data)\n")
     ok, fail = 0, []
