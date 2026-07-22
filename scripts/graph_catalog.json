@@ -3,12 +3,12 @@
   "schema": "data-strength-elevator graph+analysis decision catalog v1",
   "purpose": "single machine-readable index queried by choose_graph.py so styles/rules are stored once, not searched",
   "sources": "styles from graph-style-library.md; anti-patterns from FriendsDontLetFriends (MIT, DOIs cited); journal palettes hex from ggsci/ggprism (GPL-3 code NOT used, hex are facts); style engines from SciencePlots + ultraplot (MIT); stat methods from statistics-rigor.md + domain-conventions.md",
-  "scope_rule": "GROUP-8 styles + modeling stats are hard-scoped to in-silico/modeling/signal deliverables; never launder onto wet-lab dissolution/PK/BE/biological endpoints"
+  "scope_rule": "GROUP-8 styles + modeling stats are hard-scoped to in-silico/modeling/signal deliverables; never launder onto wet-lab dissolution/PK/BE/biological endpoints | S46-S62 added 2026-07-19 from user-supplied reference figures (Ex1): each carries its own domain_fit/requires; the omics/cytometry family (S49-S54) is scoped to omics/single-cell/cytometry deliverables and must not be laundered onto dissolution/PK/BE endpoints. | S69-S74 added 2026-07-19 from the ggplot2-20-journal-cases collection (14 of 20 were already covered; these 6 were the genuinely-new idioms). Each carries its own domain_fit; swimmer/CLD/binned-heatmap/Mantel/polar-heatmap are hard-scoped to their fields and must not launder onto dissolution/PK/BE endpoints (CLD needs a real post-hoc; a binned ratio must centre on its threshold)."
  },
  "styles": [
   {
    "id": "S1",
-   "name": "Bar + overlaid individual data points (dot-on-bar), mean \u00b1 s.d",
+   "name": "Bar + overlaid individual data points (dot-on-bar), mean ± s.d",
    "group": "distributions",
    "provenance": "E",
    "intent": [
@@ -51,7 +51,7 @@
    "id": "S3",
    "name": "Violin / box-and-whisker / raincloud",
    "group": "distributions",
-   "provenance": "D \u2014 use with care",
+   "provenance": "D — use with care",
    "intent": [
     "distribution",
     "magnitude"
@@ -123,7 +123,7 @@
   },
   {
    "id": "S7",
-   "name": "Grouped / clustered bar (two-factor: condition \u00d7 category)",
+   "name": "Grouped / clustered bar (two-factor: condition × category)",
    "group": "comparisons",
    "provenance": "E",
    "intent": [
@@ -141,7 +141,7 @@
   },
   {
    "id": "S8",
-   "name": "Dose\u2013response bar ladder (ascending/descending staircase)",
+   "name": "Dose–response bar ladder (ascending/descending staircase)",
    "group": "comparisons",
    "provenance": "E",
    "intent": [
@@ -178,7 +178,7 @@
   },
   {
    "id": "S10",
-   "name": "Floating / range bar (min\u2192max with mean line) for DoE",
+   "name": "Floating / range bar (min→max with mean line) for DoE",
    "group": "comparisons",
    "provenance": "E",
    "intent": [
@@ -214,7 +214,7 @@
   },
   {
    "id": "S12",
-   "name": "Dose\u2013response / concentration\u2013response line with fit",
+   "name": "Dose–response / concentration–response line with fit",
    "group": "comparisons",
    "provenance": "E-variant",
    "intent": [
@@ -254,7 +254,7 @@
   },
   {
    "id": "S14",
-   "name": "Bland\u2013Altman (difference vs mean) agreement plot",
+   "name": "Bland–Altman (difference vs mean) agreement plot",
    "group": "relationships / parity",
    "provenance": "D",
    "intent": [
@@ -525,7 +525,7 @@
   },
   {
    "id": "S28",
-   "name": "Multi-series kinetic / time-course line (mean \u00b1 s.d.)",
+   "name": "Multi-series kinetic / time-course line (mean ± s.d.)",
    "group": "time-course",
    "provenance": "E",
    "intent": [
@@ -563,7 +563,7 @@
   },
   {
    "id": "S30",
-   "name": "Semi-log PK concentration\u2013time profile",
+   "name": "Semi-log PK concentration–time profile",
    "group": "time-course",
    "provenance": "D",
    "intent": [
@@ -583,7 +583,7 @@
   },
   {
    "id": "S31",
-   "name": "Kaplan\u2013Meier survival / time-to-event step curve + log-rank",
+   "name": "Kaplan–Meier survival / time-to-event step curve + log-rank",
    "group": "time-course",
    "provenance": "E",
    "intent": [
@@ -780,7 +780,7 @@
   },
   {
    "id": "S42",
-   "name": "Stem plot \u2014 discrete / sparse spectrum",
+   "name": "Stem plot — discrete / sparse spectrum",
    "group": "fields, spectra & dimensionality",
    "provenance": "D-K",
    "intent": [
@@ -848,6 +848,690 @@
    "stat": null,
    "requires": [],
    "note": ""
+  },
+  {
+   "id": "S46",
+   "name": "Paired before/after plot with per-subject connecting lines",
+   "group": "distributions",
+   "provenance": "D",
+   "intent": [
+    "compare",
+    "distribution"
+   ],
+   "data_structure": [
+    "continuous_paired",
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "crossover/BE data are paired by subject — pair the points AND analyse on the log scale (S25/S30)",
+    "BE": "required: pairing is the design; an unpaired test discards the blocking"
+   },
+   "stat": null,
+   "requires": [
+    "draw every subject's own line",
+    "analyse with a PAIRED test (paired t / Wilcoxon signed-rank)"
+   ],
+   "note": "if the design is paired, hiding the pairing is a DS2 error — two independent-looking boxes overstate variance"
+  },
+  {
+   "id": "S47",
+   "name": "Dot plot against shaded reference / threshold zones",
+   "group": "comparisons",
+   "provenance": "D",
+   "intent": [
+    "compare",
+    "ranking",
+    "magnitude"
+   ],
+   "data_structure": [
+    "categorical",
+    "ordinal"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "therapeutic window / trough target bands — state the source of the band",
+    "PBPK": "predicted exposure against a named safety threshold"
+   },
+   "stat": null,
+   "requires": [
+    "label each zone and cite where the threshold comes from"
+   ],
+   "note": "the bands turn a bare ranking into an interpretable call (below/within/above target)"
+  },
+  {
+   "id": "S48",
+   "name": "Broken-axis dot plot for a long-tailed count",
+   "group": "distributions",
+   "provenance": "D",
+   "intent": [
+    "compare",
+    "distribution"
+   ],
+   "data_structure": [
+    "categorical",
+    "discrete"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "dots only — never break the axis of a BAR chart (AP9: length must encode value)",
+    "mark the break on both facing spines"
+   ],
+   "note": "legitimate only for position-based marks; consider a log axis first"
+  },
+  {
+   "id": "S49",
+   "name": "Dual-encoded dot-plot matrix (dot size = fraction, dot colour = level)",
+   "group": "comparisons",
+   "provenance": "K",
+   "intent": [
+    "compare",
+    "overview",
+    "screen"
+   ],
+   "data_structure": [
+    "matrix",
+    "categorical",
+    "high_dim"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "a size legend AND a colorbar — two encodings need two keys",
+    "state what the size fraction is a fraction OF"
+   ],
+   "note": "carries two statistics per cell where a heatmap carries one; do not use if only one statistic exists"
+  },
+  {
+   "id": "S50",
+   "name": "Matrix heatmap with categorical annotation tracks",
+   "group": "comparisons",
+   "provenance": "K",
+   "intent": [
+    "overview",
+    "compare",
+    "clustering"
+   ],
+   "data_structure": [
+    "matrix",
+    "high_dim"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "order samples by the annotation so the block structure is visible",
+    "diverging scale ONLY if the matrix is genuinely signed (z-score); sequential otherwise (AP3)"
+   ],
+   "note": "the tracks let a reader see whether the pattern follows the biology or a batch/confounder"
+  },
+  {
+   "id": "S51",
+   "name": "Enrichment dot plot (ratio on x, count as size, FDR as colour)",
+   "group": "comparisons",
+   "provenance": "K",
+   "intent": [
+    "ranking",
+    "screen",
+    "compare"
+   ],
+   "data_structure": [
+    "categorical",
+    "high_dim"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "adjusted p (BH/FDR) across ALL sets tested, not just the ones plotted",
+    "state the background/universe size"
+   ],
+   "note": "strictly more informative than an enrichment bar chart, which encodes one quantity"
+  },
+  {
+   "id": "S52",
+   "name": "GSEA running-enrichment plot (ES curve + member rug + ranked metric)",
+   "group": "comparisons",
+   "provenance": "K",
+   "intent": [
+    "ranking",
+    "screen"
+   ],
+   "data_structure": [
+    "high_dim",
+    "ordinal"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "NES + FDR from a real permutation null over a FAMILY of sets (an FDR over one set is meaningless)",
+    "shared x across all three tiers"
+   ],
+   "note": "answers 'is this set concentrated at one end of the ranked list', which an enrichment bar cannot"
+  },
+  {
+   "id": "S53",
+   "name": "Embedding + feature-plot couplet (clusters, then the same coordinates by one feature)",
+   "group": "dimensionality",
+   "provenance": "K",
+   "intent": [
+    "dimensionality",
+    "clustering",
+    "overview"
+   ],
+   "data_structure": [
+    "high_dim",
+    "scores"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "identical coordinates in both panels",
+    "direct on-plot cluster labels instead of a long legend where it fits"
+   ],
+   "note": "a separated embedding is a hypothesis, not a test — back a class claim with a held-out classifier (S35/S36)"
+  },
+  {
+   "id": "S54",
+   "name": "Sequential gating-strategy panel row (density + gate + % of parent)",
+   "group": "classification",
+   "provenance": "D",
+   "intent": [
+    "classification",
+    "screen",
+    "overview"
+   ],
+   "data_structure": [
+    "continuous",
+    "scores"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "% of PARENT at every step and the final % of total",
+    "each panel shows only the population the previous gate selected"
+   ],
+   "note": "the raw gate behind a reported percentage — a bare % with no gating panel is unauditable"
+  },
+  {
+   "id": "S55",
+   "name": "Multi-stage alluvial / cohort flow with proportional ribbons",
+   "group": "flow",
+   "provenance": "D",
+   "intent": [
+    "composition",
+    "overview"
+   ],
+   "data_structure": [
+    "compositional",
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "mass must be conserved across stages — the widths must sum",
+    "label the n at every node"
+   ],
+   "note": "use for a cohort moving through sequential decisions; a single split is just a stacked bar"
+  },
+  {
+   "id": "S56",
+   "name": "Radial dendrogram with value-scaled tip markers",
+   "group": "flow",
+   "provenance": "K",
+   "intent": [
+    "clustering",
+    "ranking",
+    "overview"
+   ],
+   "data_structure": [
+    "high_dim",
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "state the linkage + distance metric",
+    "a size legend for the tip encoding"
+   ],
+   "note": "maps a measured value onto a FIXED tree; use a rectangular dendrogram (D05) when the tree itself is the result"
+  },
+  {
+   "id": "S57",
+   "name": "Network with detected communities + labelled hubs",
+   "group": "flow",
+   "provenance": "K",
+   "intent": [
+    "clustering",
+    "overview"
+   ],
+   "data_structure": [
+    "high_dim",
+    "matrix"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "name the layout AND its seed (AP8: appearance drives interpretation)",
+    "name the community-detection algorithm",
+    "label hubs only, not every node"
+   ],
+   "note": "try more than one layout before believing the structure you see"
+  },
+  {
+   "id": "S58",
+   "name": "Study-design / dosing-timeline schematic",
+   "group": "flow",
+   "provenance": "D",
+   "intent": [
+    "overview",
+    "time_course"
+   ],
+   "data_structure": [
+    "time_series",
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "sampling schedule + dosing events must be legible enough to reproduce the study",
+    "dissolution": "state medium, apparatus and sampling times on the schematic"
+   },
+   "stat": null,
+   "requires": [
+    "a real time axis in real units",
+    "every arm, dose event and readout labelled"
+   ],
+   "note": "this is the M2 'panel a = orientation' figure; a results figure that precedes its design schematic is harder to review"
+  },
+  {
+   "id": "S59",
+   "name": "Analysis / model pipeline block schematic",
+   "group": "flow",
+   "provenance": "K",
+   "intent": [
+    "overview"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PINN": "show inputs, the loss terms and the validation split — a pipeline box diagram is not a substitute for loss curves + parity (S19/S13)",
+    "CFD": "show the solver chain and where validation enters"
+   },
+   "stat": null,
+   "requires": [
+    "every box is a real step someone could re-run"
+   ],
+   "note": "orientation only — it never substitutes for the convergence/parity evidence a modelling claim owes"
+  },
+  {
+   "id": "S60",
+   "name": "Offset trace array with a scale bar (no y-axis)",
+   "group": "time_course",
+   "provenance": "K",
+   "intent": [
+    "time_course",
+    "overview"
+   ],
+   "data_structure": [
+    "time_series",
+    "signal"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "a scale bar carrying BOTH units when the y-axis is dropped",
+    "mark stimulus/event times"
+   ],
+   "note": "for many simultaneous traces where relative timing is the point; use small-multiples if absolute values must be compared"
+  },
+  {
+   "id": "S61",
+   "name": "Parity plot with bidirectional (x and y) error bars + flagged outliers",
+   "group": "relationships",
+   "provenance": "D",
+   "intent": [
+    "agreement",
+    "calibration"
+   ],
+   "data_structure": [
+    "continuous_paired"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "IVIVC": "required alongside %PE (<10% internal) + leave-one-formulation-out; a bare R2 is a DS5 blocker",
+    "CFD": "pair with GCI (S20)",
+    "PINN": "pair with relative-L2 and the loss curves (S19)"
+   },
+   "stat": "agreement_pred_obs",
+   "requires": [
+    "identity line",
+    "a QUANTIFIED agreement metric on the panel — never 'agrees well'"
+   ],
+   "note": "use when BOTH axes carry measurement error; ordinary parity (S13) understates disagreement then"
+  },
+  {
+   "id": "S62",
+   "name": "Grouped regression with pooled + per-group fits (Simpson check)",
+   "group": "relationships",
+   "provenance": "D",
+   "intent": [
+    "compare",
+    "agreement"
+   ],
+   "data_structure": [
+    "continuous",
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "report the pooled r AND every within-group r",
+    "state n per group"
+   ],
+   "note": "guards against Simpson's paradox — a pooled correlation can reverse within groups; never report only the pooled fit for grouped data"
+  },
+  {
+   "id": "S63",
+   "name": "Size distribution with percentile readout (D10/D50/D90 + span)",
+   "group": "distributions",
+   "provenance": "R",
+   "intent": [
+    "distribution",
+    "magnitude"
+   ],
+   "data_structure": [
+    "continuous"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "dissolution": "particle size drives dissolution rate — report the distribution, not just a mean",
+    "PK": "size governs biodistribution; state the weighting (volume vs intensity vs number)"
+   },
+   "stat": null,
+   "requires": [
+    "percentiles COMPUTED from the cumulative curve, never typed in",
+    "state the weighting (Q3 volume / Q0 number) and the technique"
+   ],
+   "note": "a Z-average alone hides bimodality and tails; the span (D90-D10)/D50 is the width statistic reviewers look for"
+  },
+  {
+   "id": "S64",
+   "name": "Quantified overlap of two distributions (overlap coefficient)",
+   "group": "distributions",
+   "provenance": "R",
+   "intent": [
+    "compare",
+    "distribution",
+    "classification"
+   ],
+   "data_structure": [
+    "continuous",
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "exposure overlap between arms is not bioequivalence — BE needs S25 (90% CI vs 80-125%)"
+   },
+   "stat": "compare_two_groups",
+   "requires": [
+    "label the shaded area as exactly the statistic you computed (OVL = the integral of min(f1,f2))",
+    "give a magnitude too (AUC or Cohen's d), not just the picture"
+   ],
+   "note": "answers 'how separable are these groups', which two means +/- SD cannot; shade the intersection and mark the crossing threshold"
+  },
+  {
+   "id": "S65",
+   "name": "Annotated spectrum with assigned bands",
+   "group": "spectral",
+   "provenance": "R",
+   "intent": [
+    "spectral",
+    "overview"
+   ],
+   "data_structure": [
+    "signal",
+    "continuous"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "formulation": "FTIR/Raman evidence of encapsulation or polymorph change — assign the bands you rely on"
+   },
+   "stat": null,
+   "requires": [
+    "DETECT peak positions from the array so labels cannot drift from the data",
+    "real superscript units via mathtext (cm$^{-1}$), never a literal caret",
+    "keep the conventional axis direction (FTIR runs high to low wavenumber)"
+   ],
+   "note": "an unassigned spectrum proves nothing; the assignment is the argument"
+  },
+  {
+   "id": "S66",
+   "name": "PCA score plot with per-group confidence ellipses",
+   "group": "dimensionality",
+   "provenance": "R",
+   "intent": [
+    "dimensionality",
+    "clustering",
+    "compare"
+   ],
+   "data_structure": [
+    "high_dim",
+    "scores"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": "dimensionality",
+   "requires": [
+    "run a REAL decomposition and print % variance per axis from the singular values",
+    "state the ellipse definition (95%, chi-square 2 df) and that it is a covariance ellipse, not a CI of the mean"
+   ],
+   "note": "ellipses show group dispersion and overlap that bare scores hide; separation is still a hypothesis, not a test (back with S35/S36)"
+  },
+  {
+   "id": "S67",
+   "name": "Route-of-administration / biodistribution schematic",
+   "group": "flow",
+   "provenance": "R",
+   "intent": [
+    "overview",
+    "composition"
+   ],
+   "data_structure": [
+    "categorical",
+    "compositional"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "organ shares must be %ID (or %ID/g — say which) and account for the blood pool",
+    "PBPK": "the compartments drawn should match the compartments modelled"
+   },
+   "stat": null,
+   "requires": [
+    "carry a real quantity per organ so the cartoon is data-bearing, not decorative",
+    "the shares plus the unrecovered fraction must account for the dose"
+   ],
+   "note": "the M2 orientation panel for an in-vivo study; a purely decorative organ cartoon earns nothing"
+  },
+  {
+   "id": "S68",
+   "name": "Mechanism cartoon (binding to uptake pathway), numbered steps",
+   "group": "flow",
+   "provenance": "R",
+   "intent": [
+    "overview"
+   ],
+   "data_structure": [
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "formulation": "the proposed uptake route should match the evidence panels that follow (inhibitor/temperature blocks)"
+   },
+   "stat": null,
+   "requires": [
+    "every step named in the caption must be DRAWN on the canvas",
+    "elements described as touching must actually touch — check the geometry, do not eyeball it",
+    "number the steps so the caption can reference them"
+   ],
+   "note": "orientation only: a mechanism cartoon is a hypothesis diagram and never substitutes for the experiment that tests it"
+  },
+  {
+   "id": "S69",
+   "name": "Swimmer plot (per-subject response timeline)",
+   "group": "time-course",
+   "provenance": "R",
+   "intent": [
+    "time_course",
+    "survival",
+    "compare",
+    "overview"
+   ],
+   "data_structure": [
+    "time_series",
+    "categorical",
+    "time_to_event"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "works as a per-formulation stability/exposure timeline; state what the bar length measures",
+    "clinical": "one bar per subject; response category by colour, on/off-study events as glyphs"
+   },
+   "stat": null,
+   "requires": [
+    "one row per subject, sorted by duration",
+    "a legend for BOTH the response colours AND the event glyphs"
+   ],
+   "note": "shows individual trajectories and durability at a glance, which a Kaplan-Meier (S2) aggregates away; pair them"
+  },
+  {
+   "id": "S70",
+   "name": "Grouped bars with compact-letter-display (CLD) significance",
+   "group": "comparisons",
+   "provenance": "R",
+   "intent": [
+    "compare",
+    "ranking"
+   ],
+   "data_structure": [
+    "categorical",
+    "continuous"
+   ],
+   "min_n": 3,
+   "domain_fit": {
+    "dissolution": "do NOT letter single-timepoint % as a profile claim — that needs f2 (S27); letters are for endpoint means only",
+    "PK": "letter geometric means on the log scale, not linear mean±SD (S30)"
+   },
+   "stat": "compare_multi_groups",
+   "requires": [
+    "show the replicate points on the bars (AP1)",
+    "state the post-hoc test the letters come from (e.g. Tukey HSD); bars sharing a letter are not significantly different"
+   ],
+   "note": "the compact-letter-display reports ALL pairwise outcomes at once, where a few brackets (S1) show only selected pairs; needs a real post-hoc, not eyeballed letters"
+  },
+  {
+   "id": "S71",
+   "name": "Binned-colour heatmap with row-metadata table (antibiogram)",
+   "group": "comparisons",
+   "provenance": "R",
+   "intent": [
+    "overview",
+    "compare",
+    "screen"
+   ],
+   "data_structure": [
+    "matrix",
+    "categorical"
+   ],
+   "min_n": 0,
+   "domain_fit": {
+    "PK": "fold-change vs a reference (RR, ratio-to-RLD) binned onto interpretable thresholds reads better than a continuous ramp"
+   },
+   "stat": null,
+   "requires": [
+    "a stepped/segmented legend (BoundaryNorm), NOT a continuous colorbar",
+    "bins centred on the meaningful threshold (e.g. 1 for a ratio); diverging only because the ratio is signed around it"
+   ],
+   "note": "binning maps a continuous value onto decision categories (susceptible/resistant, within/out of spec); use a continuous heatmap (I03/J06) when the gradient itself is the message"
+  },
+  {
+   "id": "S72",
+   "name": "Circos / circular ideogram with ribbon links",
+   "group": "flow",
+   "provenance": "R",
+   "intent": [
+    "overview",
+    "composition"
+   ],
+   "data_structure": [
+    "categorical",
+    "matrix",
+    "high_dim"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "links dip toward the centre (Bezier), never straight chords across the face",
+    "colour links by a categorical driver with a legend; keep rim labels from colliding"
+   ],
+   "note": "for many pairwise links around one cyclic/positional axis (genomic loci, migration flows); a bipartite graph (E04) or alluvial (S55) is clearer when the axis is not cyclic"
+  },
+  {
+   "id": "S73",
+   "name": "Mantel composite (correlation heatmap + linked test edges)",
+   "group": "relationships",
+   "provenance": "R",
+   "intent": [
+    "agreement",
+    "compare",
+    "overview"
+   ],
+   "data_structure": [
+    "matrix",
+    "high_dim"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "encode the test statistic by width, its p by colour, its sign by solid/dashed — three separate legends",
+    "a real Mantel/partial-Mantel needs distance matrices + a permutation p; do not label an ordinary correlation as Mantel"
+   ],
+   "note": "the microbiome/ecology idiom relating an environment-variable correlation structure to community matrices; overkill for a single pairwise question (use S13/S14)"
+  },
+  {
+   "id": "S74",
+   "name": "Polar (radial) heatmap — concentric rings x angular sectors",
+   "group": "fields, spectra & dimensionality",
+   "provenance": "R",
+   "intent": [
+    "overview",
+    "compare"
+   ],
+   "data_structure": [
+    "matrix"
+   ],
+   "min_n": 0,
+   "domain_fit": {},
+   "stat": null,
+   "requires": [
+    "keep the printed cell values upright and legible",
+    "diverging scale only if the value is genuinely signed (partial r); sequential otherwise (AP3)"
+   ],
+   "note": "a heatmap wrapped to polar reads compactly when sectors are a natural cycle or a long categorical list; a rectangular heatmap (I03) is more accurate for precise magnitude comparison — angle/area distort. Distinct from a polar rose (H09)"
   }
  ],
  "antipatterns": [
@@ -954,7 +1638,7 @@
   {
    "id": "AP14",
    "name": "Mixing stacked bars with mean separation",
-   "fix": "don't combine proportion-stacking with mean\u00b1error",
+   "fix": "don't combine proportion-stacking with mean±error",
    "ref": "FriendsDontLetFriends"
   },
   {
@@ -1019,7 +1703,7 @@
     "#B09C85"
    ],
    "source": "ggsci NPG (GPL-3; hex are facts)",
-   "note": "Nature journals; NOT deutan-safe (red #E64B35 vs green #00A087) \u2014 only with position+label+shape redundancy, else prefer okabe_ito"
+   "note": "Nature journals; NOT deutan-safe (red #E64B35 vs green #00A087) — only with position+label+shape redundancy, else prefer okabe_ito"
   },
   "aaas": {
    "colorblind_safe": false,
@@ -1036,7 +1720,7 @@
     "#1B1919"
    ],
    "source": "ggsci AAAS/Science (GPL-3; hex are facts)",
-   "note": "Science; red/green present \u2014 verify CB-safety or add redundancy"
+   "note": "Science; red/green present — verify CB-safety or add redundancy"
   },
   "nejm": {
    "colorblind_safe": false,
@@ -1081,7 +1765,7 @@
     "#80796B"
    ],
    "source": "ggsci JAMA (GPL-3; hex are facts)",
-   "note": "JAMA; muted, differ in lightness \u2014 safer than most journal cycles but verify + add redundancy"
+   "note": "JAMA; muted, differ in lightness — safer than most journal cycles but verify + add redundancy"
   }
  },
  "style_engines": {
@@ -1148,7 +1832,7 @@
    "see": "S31"
   },
   "agreement_pred_obs": {
-   "method": "parity (S13) + Bland-Altman (S14) + %PE / relative-L2 (domain); not bare R\u00b2",
+   "method": "parity (S13) + Bland-Altman (S14) + %PE / relative-L2 (domain); not bare R²",
    "see": "S13/S14, domain-conventions"
   },
   "regression": {
@@ -1156,7 +1840,7 @@
    "see": "statistics-rigor F1"
   },
   "model_selection": {
-   "method": "AIC/AICc/BIC and/or cross-validation over ranked candidates; not raw R\u00b2",
+   "method": "AIC/AICc/BIC and/or cross-validation over ranked candidates; not raw R²",
    "see": "statistics-rigor F2/F3"
   },
   "dimensionality": {
@@ -1222,7 +1906,7 @@
   {
    "id": "R-PK",
    "when": "domain~PK & intent~exposure/compare",
-   "enforce": "REJECT mean\u00b1SD-linear + t-test; geometric mean, log, 90% CI (S30/S25)",
+   "enforce": "REJECT mean±SD-linear + t-test; geometric mean, log, 90% CI (S30/S25)",
    "ref": "DS5"
   },
   {

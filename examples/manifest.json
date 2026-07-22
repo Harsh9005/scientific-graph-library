@@ -513,5 +513,180 @@
   "Specialized",
   "I07_model_vs_data",
   "overlay with uncertainty"
+ ],
+ [
+  "Distributions",
+  "A17_sina",
+  "violin + every raw point"
+ ],
+ [
+  "Distributions",
+  "A18_paired_prepost",
+  "paired before/after with subject lines"
+ ],
+ [
+  "Distributions",
+  "A19_broken_axis",
+  "long tail without crushing the low group"
+ ],
+ [
+  "Correlation",
+  "B15_corr_triangle",
+  "lower-triangle correlogram + significance"
+ ],
+ [
+  "Correlation",
+  "B16_parity_xy_err",
+  "parity with x/y error + flagged outliers"
+ ],
+ [
+  "Correlation",
+  "B17_grouped_regression",
+  "pooled fit + per-group r (Simpson check)"
+ ],
+ [
+  "Comparison",
+  "C15_grouped_dot_on_bar",
+  "two-factor bars that still show replicates"
+ ],
+ [
+  "Comparison",
+  "C16_dot_reference_zones",
+  "estimates against banded thresholds"
+ ],
+ [
+  "Flow-Network",
+  "E06_alluvial",
+  "multi-stage cohort flow with ribbons"
+ ],
+ [
+  "Flow-Network",
+  "E07_radial_dendrogram",
+  "radial tree with value-scaled tips"
+ ],
+ [
+  "Flow-Network",
+  "E08_network_communities",
+  "communities + hub labels"
+ ],
+ [
+  "Time-series",
+  "F11_offset_traces",
+  "many traces via offset + scale bar"
+ ],
+ [
+  "3D-Fields",
+  "H11_annotated_field_profile",
+  "field + companion profile, annotated"
+ ],
+ [
+  "Specialized",
+  "I08_study_design",
+  "study-design / dosing timeline"
+ ],
+ [
+  "Specialized",
+  "I09_pipeline_schematic",
+  "analysis / model pipeline diagram"
+ ],
+ [
+  "Specialized",
+  "I10_pie_vs_bar",
+  "AP10/AP11: why pie loses to a bar"
+ ],
+ [
+  "Omics-Cytometry",
+  "J01_embedding_feature_pair",
+  "clusters + same embedding by feature"
+ ],
+ [
+  "Omics-Cytometry",
+  "J02_dotplot_matrix",
+  "two statistics at once (size + colour)"
+ ],
+ [
+  "Omics-Cytometry",
+  "J03_stacked_violin",
+  "per-gene distributions across groups"
+ ],
+ [
+  "Omics-Cytometry",
+  "J04_enrichment_dotplot",
+  "ratio, count and FDR in one panel"
+ ],
+ [
+  "Omics-Cytometry",
+  "J05_gsea_running",
+  "running enrichment + rank ticks"
+ ],
+ [
+  "Omics-Cytometry",
+  "J06_heatmap_tracks",
+  "matrix + categorical sample tracks"
+ ],
+ [
+  "Omics-Cytometry",
+  "J07_flow_gating",
+  "sequential gating strategy with % kept"
+ ],
+ [
+  "Distributions",
+  "A20_psd_percentiles",
+  "size distribution with D10/D50/D90"
+ ],
+ [
+  "Correlation",
+  "B18_distribution_overlap",
+  "quantified overlap of two distributions"
+ ],
+ [
+  "Scientific",
+  "G21_annotated_spectrum",
+  "spectrum with assigned bands"
+ ],
+ [
+  "Specialized",
+  "I11_biodistribution_route",
+  "route of administration and organ fate"
+ ],
+ [
+  "Specialized",
+  "I12_mechanism_cartoon",
+  "receptor binding and uptake pathway"
+ ],
+ [
+  "Omics-Cytometry",
+  "J08_pca_ellipses",
+  "PCA scores + group confidence ellipses"
+ ],
+ [
+  "Correlation",
+  "B19_mantel",
+  "correlation heatmap + Mantel links"
+ ],
+ [
+  "Comparison",
+  "C17_cld_bars",
+  "grouped bars with compact-letter significance"
+ ],
+ [
+  "Flow-Network",
+  "E09_circos",
+  "circular ideogram with ribbon links"
+ ],
+ [
+  "Scientific",
+  "G22_swimmer",
+  "per-subject response timeline (oncology)"
+ ],
+ [
+  "3D-Fields",
+  "H12_polar_heatmap",
+  "radial heatmap (rings x sectors)"
+ ],
+ [
+  "Specialized",
+  "I13_binned_heatmap",
+  "binned-color heatmap with row metadata"
  ]
 ]

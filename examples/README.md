@@ -1,18 +1,18 @@
-# Example gallery — 103 publication-quality figures
+# Example gallery — 138 publication-quality figures
 
-This gallery holds **103 chart types and variants** across 9 categories. Every figure is drawn from **synthetic, seeded data** by [`generate_gallery.py`](generate_gallery.py), so rerunning the script hands back the same picture rather than something that drifts, and each one was built to follow the library's own rules: a single **colorblind-safe palette** (Okabe-Ito), sans-serif type, points sitting on the bars, exact statistics, **sequential colour maps rather than jet**, and clean axes. Everything is exported twice — a **PNG at 300 dpi** to preview here, and a **vector PDF** to drop straight into a manuscript ([`png/`](png/), [`pdf/`](pdf/)).
+A comprehensive gallery of **138 distinct chart types and variants** across 10 categories, each generated from **synthetic (seeded, reproducible) data** by [`scripts/generate_gallery.py`](../scripts/generate_gallery.py) and built to the skill's publication-ready rules: one **colorblind-safe palette** (Okabe-Ito), sans-serif type, points shown on bars, exact stats, **sequential (never jet) colormaps**, clean de-spined axes. Each is exported as **PNG (300 dpi)** for preview and **PDF (vector)** for submission ([`png/`](png/), [`pdf/`](pdf/)).
 
-Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, numpy, scipy, seaborn, networkx, pandas — no LaTeX).
+Regenerate everything with `python3 scripts/generate_gallery.py` from the skill root (needs matplotlib, numpy, scipy, seaborn, networkx, pandas — no LaTeX). Every figure is checked by a deterministic text-overlap audit ([`_figure_qc.py`](../scripts/_figure_qc.py) — the F16 publication-ready gate) as it is built, and the run prints any collisions it finds.
 
 > Data are synthetic and illustrative — the figures demonstrate **form and standards**, not real results.
 
 | Category | Count | Category | Count |
 |---|---|---|---|
-| 📊 Distributions | 16 | 🔗 Correlation | 14 |
-| 📶 Comparison | 14 | 🥧 Part-of-whole | 7 |
-| 🕸️ Flow-Network | 5 | 📈 Time-series | 10 |
-| 🔬 Scientific | 20 | 🌐 3D-Fields | 10 |
-| 🧩 Specialized | 7 |  |   |
+| 📊 Distributions | 20 | 🔗 Correlation | 19 |
+| 📶 Comparison | 17 | 🥧 Part-of-whole | 7 |
+| 🕸️ Flow-Network | 9 | 📈 Time-series | 11 |
+| 🔬 Scientific | 22 | 🧬 Omics-Cytometry | 8 |
+| 🌐 3D-Fields | 12 | 🧩 Specialized | 13 |
 
 ---
 
@@ -66,6 +66,18 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 **A16. Qq** — *distributional check*  
 ![A16_qq](png/A16_qq.png)
 
+**A17. Sina** — *violin + every raw point*  
+![A17_sina](png/A17_sina.png)
+
+**A18. Paired Prepost** — *paired before/after with subject lines*  
+![A18_paired_prepost](png/A18_paired_prepost.png)
+
+**A19. Broken Axis** — *long tail without crushing the low group*  
+![A19_broken_axis](png/A19_broken_axis.png)
+
+**A20. Psd Percentiles** — *size distribution with D10/D50/D90*  
+![A20_psd_percentiles](png/A20_psd_percentiles.png)
+
 
 ## 🔗 Correlation
 
@@ -110,6 +122,21 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 
 **B14. Loess** — *nonparametric trend*  
 ![B14_loess](png/B14_loess.png)
+
+**B15. Corr Triangle** — *lower-triangle correlogram + significance*  
+![B15_corr_triangle](png/B15_corr_triangle.png)
+
+**B16. Parity Xy Err** — *parity with x/y error + flagged outliers*  
+![B16_parity_xy_err](png/B16_parity_xy_err.png)
+
+**B17. Grouped Regression** — *pooled fit + per-group r (Simpson check)*  
+![B17_grouped_regression](png/B17_grouped_regression.png)
+
+**B18. Distribution Overlap** — *quantified overlap of two distributions*  
+![B18_distribution_overlap](png/B18_distribution_overlap.png)
+
+**B19. Mantel** — *correlation heatmap + Mantel links*  
+![B19_mantel](png/B19_mantel.png)
 
 
 ## 📶 Comparison
@@ -156,6 +183,15 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 **C14. Point Ci** — *position-based estimates*  
 ![C14_point_ci](png/C14_point_ci.png)
 
+**C15. Grouped Dot On Bar** — *two-factor bars that still show replicates*  
+![C15_grouped_dot_on_bar](png/C15_grouped_dot_on_bar.png)
+
+**C16. Dot Reference Zones** — *estimates against banded thresholds*  
+![C16_dot_reference_zones](png/C16_dot_reference_zones.png)
+
+**C17. Cld Bars** — *grouped bars with compact-letter significance*  
+![C17_cld_bars](png/C17_cld_bars.png)
+
 
 ## 🥧 Part-of-whole
 
@@ -198,6 +234,18 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 **E05. Adjacency** — *network as a matrix*  
 ![E05_adjacency](png/E05_adjacency.png)
 
+**E06. Alluvial** — *multi-stage cohort flow with ribbons*  
+![E06_alluvial](png/E06_alluvial.png)
+
+**E07. Radial Dendrogram** — *radial tree with value-scaled tips*  
+![E07_radial_dendrogram](png/E07_radial_dendrogram.png)
+
+**E08. Network Communities** — *communities + hub labels*  
+![E08_network_communities](png/E08_network_communities.png)
+
+**E09. Circos** — *circular ideogram with ribbon links*  
+![E09_circos](png/E09_circos.png)
+
 
 ## 📈 Time-series
 
@@ -230,6 +278,9 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 
 **F10. Step** — *piecewise-constant series*  
 ![F10_step](png/F10_step.png)
+
+**F11. Offset Traces** — *many traces via offset + scale bar*  
+![F11_offset_traces](png/F11_offset_traces.png)
 
 
 ## 🔬 Scientific
@@ -294,6 +345,39 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 **G20. Control Chart** — *process monitoring ±3σ*  
 ![G20_control_chart](png/G20_control_chart.png)
 
+**G21. Annotated Spectrum** — *spectrum with assigned bands*  
+![G21_annotated_spectrum](png/G21_annotated_spectrum.png)
+
+**G22. Swimmer** — *per-subject response timeline (oncology)*  
+![G22_swimmer](png/G22_swimmer.png)
+
+
+## 🧬 Omics-Cytometry
+
+**J01. Embedding Feature Pair** — *clusters + same embedding by feature*  
+![J01_embedding_feature_pair](png/J01_embedding_feature_pair.png)
+
+**J02. Dotplot Matrix** — *two statistics at once (size + colour)*  
+![J02_dotplot_matrix](png/J02_dotplot_matrix.png)
+
+**J03. Stacked Violin** — *per-gene distributions across groups*  
+![J03_stacked_violin](png/J03_stacked_violin.png)
+
+**J04. Enrichment Dotplot** — *ratio, count and FDR in one panel*  
+![J04_enrichment_dotplot](png/J04_enrichment_dotplot.png)
+
+**J05. Gsea Running** — *running enrichment + rank ticks*  
+![J05_gsea_running](png/J05_gsea_running.png)
+
+**J06. Heatmap Tracks** — *matrix + categorical sample tracks*  
+![J06_heatmap_tracks](png/J06_heatmap_tracks.png)
+
+**J07. Flow Gating** — *sequential gating strategy with % kept*  
+![J07_flow_gating](png/J07_flow_gating.png)
+
+**J08. Pca Ellipses** — *PCA scores + group confidence ellipses*  
+![J08_pca_ellipses](png/J08_pca_ellipses.png)
+
 
 ## 🌐 3D-Fields
 
@@ -327,6 +411,12 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 **H10. Ternary** — *3-component composition*  
 ![H10_ternary](png/H10_ternary.png)
 
+**H11. Annotated Field Profile** — *field + companion profile, annotated*  
+![H11_annotated_field_profile](png/H11_annotated_field_profile.png)
+
+**H12. Polar Heatmap** — *radial heatmap (rings x sectors)*  
+![H12_polar_heatmap](png/H12_polar_heatmap.png)
+
 
 ## 🧩 Specialized
 
@@ -351,7 +441,25 @@ Regenerate everything with `python3 generate_gallery.py` (needs matplotlib, nump
 **I07. Model Vs Data** — *overlay with uncertainty*  
 ![I07_model_vs_data](png/I07_model_vs_data.png)
 
+**I08. Study Design** — *study-design / dosing timeline*  
+![I08_study_design](png/I08_study_design.png)
+
+**I09. Pipeline Schematic** — *analysis / model pipeline diagram*  
+![I09_pipeline_schematic](png/I09_pipeline_schematic.png)
+
+**I10. Pie Vs Bar** — *AP10/AP11: why pie loses to a bar*  
+![I10_pie_vs_bar](png/I10_pie_vs_bar.png)
+
+**I11. Biodistribution Route** — *route of administration and organ fate*  
+![I11_biodistribution_route](png/I11_biodistribution_route.png)
+
+**I12. Mechanism Cartoon** — *receptor binding and uptake pathway*  
+![I12_mechanism_cartoon](png/I12_mechanism_cartoon.png)
+
+**I13. Binned Heatmap** — *binned-color heatmap with row metadata*  
+![I13_binned_heatmap](png/I13_binned_heatmap.png)
+
 
 ---
 
-*103 figures generated by `generate_gallery.py` (seed 20260706) for the [data-strength-elevator](../) graph-style library. Palette: Okabe-Ito (Wong 2011). Anti-pattern codes (AP1-AP16): see [`references/graph-style-library.md`](../references/graph-style-library.md).*
+*138 figures generated by `scripts/generate_gallery.py` (seed 20260706) for the [data-strength-elevator](../) graph-style library. Palette: Okabe-Ito (Wong 2011). Anti-pattern codes (AP1–AP16): see [`references/graph-style-library.md`](../references/graph-style-library.md).*

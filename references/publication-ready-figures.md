@@ -11,7 +11,7 @@ chosen chart is finished. -->
 
 *A figure is not "done" when it is correct; it is done when it is **submission-ready**: zero text overlap, legible at 100% / print size, typographically matched to the manuscript, on one consistent colorblind-safe theme, per-entity consistent across every display, rendered with consistent line/point weight so every series and data point stays distinguishable, accessible to screen-reader as well as colorblind readers, uniformly scaled across the whole figure suite, coherent as a single visual story, and **cited in the body text**. Each rule below is written to be checked, not admired. The exemplar craft (`_exemplar_mining/*.md §4`) is the evidence base; the entity mapping is instantiated for this manuscript's sunscreen-filter set.*
 
-**Two rules are non-negotiable** — a figure that fails either is not publication-ready: **F-overlap** (zero text overlap) and **F-cite** (every figure/table cited in text).
+**Two rules are BLOCKERS**: **F-overlap** (zero text overlap) and **F-cite** (every figure/table cited in text). These two are non-negotiable for publication-ready output.
 
 ---
 
@@ -252,6 +252,21 @@ Oxybenzone is the accent because it is the watch-item; it is orange + circle in 
 
 **How to verify.** Zoom-crop the densest series region and the densest point cloud: can you (a) trace each line individually, (b) count/resolve individual points, and (c) tell every series apart with color removed (greyscale test)? If any fails, F-lineweight fails. Confirm the weight ladder is identical across figures (no figure with visibly heavier/lighter lines than the rest).
 
+**Operational greyscale line-separation test (F22 — run it, don't eyeball it).** Convert the figure
+to greyscale (luminance) and confirm **every series remains distinguishable with color removed**:
+
+1. Render/convert to greyscale — e.g. desaturate the exported figure (`img.convert("L")` in Pillow),
+   or set the palette to greys, and view the result.
+2. For **each pair of series that ever run close or cross**, confirm they differ by a **second
+   channel that survives greyscale** — line style (solid/dashed/dotted), marker shape, or hatch —
+   not by hue alone. Two series that are only "blue vs green" become the *same grey* and **fail**.
+3. Confirm the **line-weight ladder is uniform across figures**: same-role strokes (data line,
+   reference line, spine) are within ~±0.3 pt figure-to-figure; a figure with visibly heavier or
+   lighter lines than the rest fails.
+
+Pass = every series separable in greyscale AND uniform weights across the suite. If the greyscale
+conversion was not actually performed, F22 is **unproven → score 0** (do not pass it on a color look).
+
 ---
 
 ## R8 — SCREEN-READER + NON-COLOR ACCESSIBILITY  *(check: F-a11y)*
@@ -261,10 +276,27 @@ Oxybenzone is the accent because it is the watch-item; it is orange + circle in 
 **How to achieve it.**
 1. **Alt-text / described caption.** Every figure carries a concise **text alternative** that states what the figure shows and its finding (not "Figure 3" — e.g. "Bar chart; oxybenzone permeation 1.6× the reference product, individual replicates overlaid"). Supply it as the figure's alt-text on submission and ensure the caption itself conveys the finding in prose so a non-visual reader loses nothing. This reuses the F-cite quantified claim (R6) as the spoken description.
 2. **Redundant encoding (never color-only).** Every distinction carried by color is **also** carried by position + a direct text label + marker shape / line style / hatch (R4, R5, R7). A greyscale print of the figure must remain fully interpretable. This is the accessibility face of "color is reinforcement, never the sole channel."
-3. **Contrast.** Text and key marks meet a legibility-contrast floor against their background (aim ≥ 4.5:1 for small text); avoid light-on-light tick labels and low-contrast gridlines competing with data.
-4. **Accessible export.** Where the venue supports it, export into a **tagged / accessible PDF** with figures given alt-text; at minimum, keep figure text as real text (vector) not rasterized pixels so it is machine-readable (ties to R2 vector preference).
+3. **Contrast — WCAG 4.5:1 is the hard floor (F23).** Text and key marks MUST meet a **contrast
+   ratio ≥ 4.5:1** against their background (the WCAG 2.1 AA floor for normal-size text); this is a
+   pass/fail number, not "aim for". Compute it, don't guess:
+   - Contrast ratio = `(L_lighter + 0.05) / (L_darker + 0.05)`, where `L` is relative luminance
+     (sRGB: linearize each channel `c' = c/12.92 if c ≤ 0.03928 else ((c+0.055)/1.055)**2.4`, then
+     `L = 0.2126 R' + 0.7152 G' + 0.0722 B'`).
+   - Check the worst-case pairs: **tick/axis-label ink vs panel background**, **data line vs
+     background**, and **annotation text vs any fill it sits on**. The **minimum** ratio over these
+     pairs is the figure's score; **any pair < 4.5:1 fails F23** (e.g. light-grey `#AAAAAA` ticks on
+     white ≈ 2.3:1 → fail; near-black `#222222` on white ≈ 15:1 → pass). Gridlines must stay *below*
+     the data in contrast so they don't compete, but axis text must clear 4.5:1.
+4. **Accessible export.** Where the venue supports it, export into a **tagged / accessible PDF** with
+   figures given alt-text; at minimum, keep figure text as real text (vector) not rasterized pixels so
+   it is machine-readable (ties to R2 vector preference).
 
-**How to verify.** For each figure: (a) an alt-text/description exists and states the finding; (b) greyscale-convert it — is every series/category still distinguishable? (c) the caption alone conveys the result without the image. Any failure fails F-a11y.
+**How to verify (F23 — three operational checks, each pass/fail).** For each figure: (a) an
+alt-text/description **exists and states the finding** (not "Figure 3"); (b) greyscale-convert it —
+is every series/category still distinguishable (the R7/F22 greyscale test)? (c) the **minimum text
+contrast ratio ≥ 4.5:1** by the calculation above; (d) the caption alone conveys the result without
+the image. Any failure fails F-a11y. If the contrast ratio was not actually computed, the contrast
+sub-check is **unproven → F23 scores 0**.
 
 ---
 
@@ -277,7 +309,22 @@ Oxybenzone is the accent because it is the watch-item; it is orange + circle in 
 2. **Standardize figure/panel dimensions.** Use a small set of canonical widths (single-column ~85 mm, double-column ~170 mm) and consistent panel heights; do not let one figure render at half the linear scale of another such that its text and marks are visibly smaller/larger when both sit at their print width.
 3. **Consistent element scale.** Marker sizes, line weights (R7), and bar widths are uniform across figures showing comparable data, so nothing needs re-zooming to read.
 
-**How to verify.** Place all figures at their intended print widths side by side: do the same-role text elements appear the **same size**? Do comparable panels have comparable dimensions? If one figure reads only at 200% while another needs zooming out, F-scale fails.
+**How to verify (F24 — the ≤ 50% text-size-variation rule).** Place all figures at their intended
+print widths and measure the **effective on-page point size of the same-role text** (tick labels are
+the easiest anchor) across the whole suite. Compute the spread:
+
+`variation = (max_size − min_size) / min_size` over same-role text at final print width.
+
+- **variation ≤ 0.50 (≤ 50%) passes**: the largest same-role text is at most 1.5× the smallest, so no
+  figure needs 200% magnification while another needs zooming out (a figure whose ticks render at
+  half another's — 2.0× ratio, variation = 1.0 — fails hard).
+- Same-role means like-for-like: tick-vs-tick, axis-title-vs-axis-title, panel-letter-vs-panel-letter
+  — do **not** compare a tick to a title.
+- Also confirm comparable panels share dimensions and the data-ink scale (marker size, line weight,
+  bar width) is uniform. Fixing sizes once in the shared style file (above) makes variation = 0 by
+  construction; the check catches figures built outside that style file.
+
+If the same-role sizes were not actually compared across figures, F24 is **unproven → score 0**.
 
 ---
 
@@ -304,15 +351,15 @@ A figure/table is **submission-ready** only when it passes ALL of:
 - [ ] **F-style** — font family/weight matches the manuscript and is identical across all figures.
 - [ ] **F-theme** — one manuscript-wide colorblind-safe palette; accent reserved for the key finding.
 - [ ] **F-entity** — every entity has the same color + marker/shape in every figure AND table, per the R5 mapping.
-- [ ] **F-lineweight** — consistent line/marker weights across figures; every series and data point is distinguishable (no overplotting; passes the greyscale-separation test).
-- [ ] **F-a11y** — screen-reader accessible: alt-text/described caption states the finding, information encoded redundantly (not color-only), contrast sufficient, text kept as real (vector) text.
-- [ ] **F-scale** — same-role text and elements are the same size across the suite; no figure needs 200% magnification while another needs zooming out.
+- [ ] **F-lineweight** — consistent line/marker weights across figures; every series and data point is distinguishable (no overplotting; **passes the operational greyscale line-separation test in R7** — every series separable with color removed).
+- [ ] **F-a11y** — screen-reader accessible: alt-text/described caption states the finding, information encoded redundantly (not color-only), **text contrast ≥ WCAG 4.5:1 by the R8 calculation**, text kept as real (vector) text.
+- [ ] **F-scale** — same-role text and elements are the same size across the suite; **panel text-size variation ≤ 50% by the R9 rule** (no figure needs 200% magnification while another needs zooming out).
 - [ ] **F-suite** — the figures share one visual language and a deliberate order, reading as a single story.
 - [ ] **F-cite** — every figure and table is called out in the body text at the point it supports. *(BLOCKER)*
 
-Plus the core correctness checks (points-on-bars, benchmark-on-axis, SD/n defined, the right chart primitive) and the domain-correctness gate from `domain-conventions.md` (no laundered wet-lab defaults). A figure that is correct but fails any gate item is **not done**; F-overlap and F-cite are the two that make a figure unusable if missed.
+Plus the core correctness/craft checks (points-on-bars, benchmark-on-axis, SD/n defined, right primitive) and the domain-correctness gate from `domain-conventions.md` (no laundered wet-lab defaults). A figure that is correct but fails any gate item is **not done**. If either BLOCKER (F-overlap, F-cite) fails, the figure is not publication-ready regardless of everything else.
 
-**Reporting.** Record the R11 checklist result per figure. State honestly which items passed on inspection versus which need the author's source files (e.g., "F-zoom cannot be confirmed until the vector export is regenerated at 300 dpi").
+**Reporting.** Record the R11 checklist result per figure in `templates/strengthening-report.md`. State honestly which items passed on inspection versus which need the author's source files (e.g., "F-zoom cannot be confirmed until the vector export is regenerated at 300 dpi").
 
 ---
 
